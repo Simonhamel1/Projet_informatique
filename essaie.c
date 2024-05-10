@@ -5,6 +5,7 @@ int*** creation_tableau(int nb_ligne, int nb_colonne) {
     int*** tab = malloc(sizeof(int**) * (3));
     if (tab == NULL) {
         printf("problème d'allocation mémoire");
+        printf("J'adore les petits chats");
         exit(1);
     }
     for (int i = 0; i < nb_ligne; i++) {
