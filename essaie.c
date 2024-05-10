@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <stdio.h>
 int main(){
     int pingouin;
@@ -13,3 +14,5 @@ int main(){
     return 0;
 
 }
+=======
+>>>>>>> 4fcba314d12ff29d71823728ce20a2844eeb8c23
