@@ -52,5 +52,6 @@ int main() {
     afficher_grille(tab, 3, 5);
     int test;
     printf("coucou antoine");
+    int baboualacreme;
     return 0;
 }
