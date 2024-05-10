@@ -50,5 +50,6 @@ int main() {
     printf("salut toi\n");
     int*** tab = creation_tableau(3, 5);
     afficher_grille(tab, 3, 5);
+    int test;
     return 0;
 }
