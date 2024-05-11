@@ -105,18 +105,9 @@ void afficher_grille(int*** tab, int nb_ligne, int nb_colonne){
     }}
 
 int main() {
-<<<<<<< HEAD
-    printf("salut toi\n");
-    int*** tab = creation_tableau(3, 5);
-    afficher_grille(tab, 3, 5);
-    int test;
-    printf("coucou antoine");
-    int baboualacreme;
-=======
     srand(time(NULL));
     int*** tab = creation_tableau(3, 9);
     generer_poisson(tab, 3, 9);
     etat_poisson(tab, 3, 9);
->>>>>>> 8e283a34067f5a920b87e31b5cd93b9177efcef0
     return 0;
 }
