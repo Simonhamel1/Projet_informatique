@@ -47,13 +47,20 @@ void etat_poisson(int*** tab, int nb_ligne, int nb_colonne){
         printf("\n");
     }
 }
-
+int verification_case(int*** tab, int a, int j, int nb_ligne, int nb_colonne){
+    if(tab[a][j][0]==1){
+        return 1;
+    }
+    else if(tab[a][j][0]==0 && (a==0 ||a==nb_ligne || j==0 || j==nb_colonne)){
+        return 0;
+    }
+}
 void afficher_grille(int*** tab, int nb_ligne, int nb_colonne){
      for(int i=0; i<nb_colonne; i+=2){
             if(tab[0][i][0]==1){
                 printf("  ____      ");
                 }
-            else {
+            else{
                 printf("            ");
                 }
         } 
@@ -63,8 +70,41 @@ void afficher_grille(int*** tab, int nb_ligne, int nb_colonne){
                 if(tab[a][j][0]==1){
                     printf(" /    %c     ", 92);
                 }
-                else{
+                else if(tab[a][j][0]==0 && a==0){
                     printf("            ");
+                }
+                else if(tab[a][j][0]==0 && j==0){
+                    if(tab[a-1][j+1][0]==0){
+                        printf("            ");
+                    }
+                    else{
+                        printf(" /    %c     ", 92);
+                    }
+                }
+                else if(tab[a][j][0]==0 && j==(nb_colonne-1)){
+                    if(tab[a-1][a+1][0]==0){
+                        printf("            ");
+                    }
+                    else{
+                         printf(" /    %c     ", 92);
+                    }
+
+                }
+                else if(tab[a][j][0]==0 && a==(nb_ligne-1)){
+                    if(tab[a-1][j-1][0]==0){
+                        if(tab[a-1][j+1][0]==0){
+                            printf("            ");
+                        }
+                        else{
+                            printf("      %c     ", 92);
+                        }
+                    }
+                    else if(tab[a-1][j+1][0]==0){
+                        printf(" /          ");
+                    }
+                    else{
+                        printf(" /    %c     ", 92);
+                    }
                 }
         }
         printf("\n");
@@ -98,7 +138,7 @@ void afficher_grille(int*** tab, int nb_ligne, int nb_colonne){
                 printf(" %c____/     ", 92);
                 }
             else{
-                printf("              ");
+                printf("            ");
                 }
              }
         printf("\n");
@@ -106,8 +146,8 @@ void afficher_grille(int*** tab, int nb_ligne, int nb_colonne){
 
 int main() {
     srand(time(NULL));
-    int*** tab = creation_tableau(3, 9);
-    generer_poisson(tab, 3, 9);
-    etat_poisson(tab, 3, 9);
+    int*** tab = creation_tableau(3, 8);
+    tab[0][0][0] = 0;
+    afficher_grille(tab, 3, 8);
     return 0;
 }
