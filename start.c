@@ -1,45 +1,54 @@
 #include <stdio.h>
 
-int playernumber(){    // fonction de début programme ( demande le nombre de joueurs )
-    int nbplayer=0;
+typedef struct{       // structure propriété case
+    int existence;
+    int nb_fish;
+    int penguin;
+}Box;
+
+
+typedef struct{     // structure propriété d'un joueur
+    int nb_penguin;
+    char *name;
+    int score_player;
+}Player;
+
+typedef struct{      // structure propriété du jeu
+    int nb_player;
+    int nb_ligne;
+    int nb_column;
+    Player* player;
+    Box** box;
+}Game;
+int playernumber(Game Game1){    // fonction de début programme ( demande le nombre de joueurs )
 
     do {
         
         printf(" Indiquer nombre de joueurs :");
-        scanf("%d",&nbplayer);
-        if (nbplayer < 2 || nbplayer > 6) {
+        scanf("%d",&Game1.nb_player);
+        if (Game1.nb_player < 2 || Game1.nb_player > 6) {
             printf("Erreur : le nombre de joueurs doit être compris entre 2 et 6\n");  // Renvoie message d'erreur si le nb joueurs est incorrecte
         }
-    } while ( nbplayer < 2 || nbplayer > 6 );
+    } while ( Game1.nb_player < 2 || Game1.nb_player > 6 );
 
-    return nbplayer;
+    return Game1.nb_player;
 
 }
 
-void * playersname( char tabplayersname[] , int nombre_de_joueur){  // procédure pour  demander noms de chaque joueur afin d'utiliser pour reste programme
+void playersname( Game Game1){  // procédure pour  demander noms de chaque joueur afin d'utiliser pour reste programme
 
-    for ( int i = 0 ; i < nombre_de_joueur , i ++ ){
+    for ( int i = 0 ; i < Game1.nb_player ; i ++ ){
         printf("Saisir nom du joueur %d : ", i+1);
-        scanf("%s";tabplayersname[i]);
+        scanf("%s",Game1.player[i]->name);
     }
 
 }
 
 int main(){  // fontion principale pour tester la fonction début programme 
-    int nombre_de_joueur;
-    char tabplayersname[nombre_de_joueur]; // Tableau pour stocker les noms des joueurs
-    
-    nombre_de_joueur = playernumber();
-    
-    printf("%d",nombre_de_joueur);
-    
-    playersname(tabplayersname, nombre_de_joueur);
-
-    printf("Les noms des joueurs sont :\n");  // test affichage noms des joueurs
-    for (int i = 0; i < nombre_de_joueur; i++) {
-        printf("Joueur %d : %s\n", i+1, tabplayersname[i]);
-    }
-
+    Game Game1;
+    Game1.nb_player = playernumber(Game1);
+    playersname(Game1);
+    printf("%s",Game1.player[0]->name);
     return 0;
 
 }
