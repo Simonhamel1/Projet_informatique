@@ -14,6 +14,7 @@ typedef struct{        // Définition d'une structure représentant un joueur
     int nb_penguin;    // Nombre de pingouins du joueur
     char* name;        // Nom du joueur
     int score_player;  // Score du joueur
+    int active;        // Indique si c'est à ce joueur de jouer(1) ou non(0)
 } Player;
 
 
@@ -181,32 +182,74 @@ void afficher_grille(Game* game1){
         }
         printf("\n");
     }}
-//void create_dimension(Game* game1){
- //   int number_players = (*game1).nb_player;
-  //  int number_ligne;
-   // int number_penguin;
-    //if(number_players==2){
+void create_dimension(Game* game1){
+    int number_penguin;
+    switch (game1->nb_player){
+        case 2 :
+            game1->nb_ligne = 12;
+            game1->nb_column = 12;
+            number_penguin = 4;
+            break;
+        case 3 :
+            game1->nb_ligne = 13;
+            game1->nb_column = 13;
+            number_penguin = 3;
+            break;
+        case 4 :
+            game1->nb_ligne = 12;
+            game1->nb_column = 12;
+            number_penguin = 2;
+            break;
+        case 5 :
+            game1->nb_ligne = 15;
+            game1->nb_column = 15;
+            number_penguin = 2;
+            break;
+        case 6 :
+            game1->nb_ligne = 9;
+            game1->nb_column = 9;
+            number_penguin = 1;
+            break;
+        default:
+            printf("erreur de nombre de joueur");
+    }
+    for(int i=0; i<game1->nb_player; i++){
+        game1->player[i].nb_penguin = number_penguin;
+    }
+    }
+int index_active_player(Game* game1){
+    for(int i=0; i<game1->nb_player; i++){
+        if(game1->player[i].active = 1){
+            return i;
+        }
+    }
+}
+int verify_fish(Game* game1){
+    int count=0;
+    for(int i=0; i<game1->nb_ligne; i++){
+        for(int j=0; j<game1->nb_column; j++){
+            if(game1->box[i][j].nb_fish==1){
+                count++;
+            }
+        }
+    }
+    if(count>=(game1->player[0].nb_penguin*game1->nb_player)){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
 
-   /// }
-    //else if(number_players==2){
-
-    //}
-    //else if(number_players==2){
-
-    //}
-    //else if(number_players==2){
-
-    //}
-//}
 int main() {
     srand(time(NULL));
     system("chcp 65001");
     Game game1;
     Game* pointer_game1 = &game1;
-    game1.nb_ligne = 4;
-    game1.nb_column = 7;
-    creation_tableau(pointer_game1);
-    generer_poisson(pointer_game1);
-    afficher_grille(pointer_game1);
+    //game1.nb_ligne = 4;
+    //game1.nb_column = 7;
+    //creation_tableau(pointer_game1);
+    //generer_poisson(pointer_game1);
+    //afficher_grille(pointer_game1);
     return 0;
 }
