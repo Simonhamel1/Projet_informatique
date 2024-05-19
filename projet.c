@@ -224,14 +224,17 @@ void put_penguin_on_tab(Game* game1){
 
 
 }
-void print_coordinate_penguin(Game* game1){
-    for(int i=0; i<game1->nb_player; i++){
-        printf("joueur %d :", i+1);
-        for(int j=0; j<game1->player[i].nb_penguin; j++){
+void print_coordinate_penguin_one_player(int num_player, Game* game1){
+        for(int j=0; j<game1->player[num_player].nb_penguin; j++){
             printf(" p%d :", j+1);
-            printf("(%d, %d)", game1->player[i].tab_penguin[j].x, game1->player[i].tab_penguin[j].y);
+            printf("(%d, %d)", game1->player[num_player].tab_penguin[j].x, game1->player[num_player].tab_penguin[j].y);
 
         }
+        printf("\n");
+    }
+void print_coordinate_penguin_all_player(Game* game1){
+    for(int i=0; i<game1->nb_player; i++){
+        print_coordinate_penguin_one_player(i, game1);
         printf("\n");
     }
 }
