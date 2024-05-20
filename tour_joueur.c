@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include<stdlib.h>
 void replace_coordinate_in_tab_penguin(int i, int j, int k, int l, Game* game1){
     int num_player = search_coordinate_in_tab_penguin(i, j, game1);
     for(int m=0; m<game1->player[num_player-1].nb_penguin; m++){
