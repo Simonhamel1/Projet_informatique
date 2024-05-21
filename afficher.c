@@ -124,8 +124,10 @@ void afficher_grille(Game* game1){
         printf("%c", 92);
         while(l<game1->nb_column){
             if(game1->box[a][l].existence){
-                if(game1->box[a][l].penguin==1){}
-                if(game1->box[a][l].nb_fish==3){
+                if(game1->box[a][l].penguin==1){
+                    printf("      /");
+                }
+                else if(game1->box[a][l].nb_fish==3){
                     printf("🐟 🐟 /");
                 }
                 else if(game1->box[a][l].nb_fish==2){

@@ -3,6 +3,7 @@
 #include <time.h>
 #include "structure.h"
 #include "afficher.c"
+#include "tour_joueur.c"
 
 void create_tab_box(Game* game1) {
     Box** box1 = malloc(sizeof(Box*) * (*game1).nb_ligne);   // Allouer de la mémoire pour un tableau de pointeurs de Box
@@ -21,6 +22,7 @@ void create_tab_box(Game* game1) {
     for (int j = 0; j < (*game1).nb_ligne; j++) {
         for (int k = 0; k < (*game1).nb_column; k++) {
             box1[j][k].existence = 1; // Initialiser le champ 'existence' à 1 pour chaque case
+            box1[j][k].penguin = 0;
         }
     }
     game1->box = box1;  // Affecter le tableau initialisé à la structure Game
@@ -228,6 +230,8 @@ int main() {
     verify_generer_poisson(pointer_game1);
     put_penguin_on_tab(pointer_game1);
     put_penguin_on_box(pointer_game1);
+    afficher_grille(pointer_game1);
+    Player_tour(1, pointer_game1);
     afficher_grille(pointer_game1);
 
     return 0;
