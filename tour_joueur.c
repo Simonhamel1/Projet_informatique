@@ -195,7 +195,7 @@ int verify_bas_droite(int i, int j, Game* game1){
         if(j%2==0 && game1->box[i][j+1].existence && game1->box[i][j+1].penguin==0){
             return 1;
         }
-        else if(j%2==1 && game1->box[i-1][j+1].existence && game1->box[i-1][j+1].penguin==0){
+        else if(j%2==1 && game1->box[i+1][j+1].existence && game1->box[i+1][j+1].penguin==0){
             return 1;
         }
         return 0;
