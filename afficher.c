@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include<stdlib.h>
+#include <string.h>
 #include "structure.h"
 #include "all_fonction.h"
 #define RESET "\033[0m"
@@ -22,38 +23,62 @@ int search_coordinate_in_tab_penguin(int i, int j, Game* game1){
     }
     return 0;
 }
+char* give_num_penguin(int num_player, int i, int j, Game* game1){
+    if(num_player!=0){
+        for(int k=0; k<game1->player[num_player-1].nb_penguin; k++){
+                if(game1->player[num_player-1].tab_penguin[k].x == i && game1->player[num_player-1].tab_penguin[k].y == j){
+                    switch(k){
+                        case 0 :
+                            return "1";
+                            break;
+                        case 1 :
+                            return "2";
+                            break;
+                        case 2 :
+                            return "3";
+                            break;
+                        case 3 :
+                            return "4";
+                            break;
+                        default :
+                            return ".";
+                    }
+                }
+        }
+    }
+}
 char* give_caractere_penguin(int i, int j, Game* game1){
-    char* a;
-    int num = search_coordinate_in_tab_penguin(i, j, game1);
-    switch (num){
-    case 0 :
-        a = "    ";
-        break;
-    case 1 :
-        a = RED"🐧P1"RESET;
-        break;
-    case 2 :
-        a = YELLOW"🐧P2"RESET;
-        break;
-    case 3 :
-        a = GREEN"🐧P3"RESET;
-        break;
-    case 4 :
-        a =BLUE"🐧P4"RESET;
-        break;
-    case 5 :
-        a = CYAN"🐧P5"RESET;
-        break;
-    case 6 :
-        a = WHITE"🐧P6"RESET;
-        break;
-    default :
-        printf("erreur dans le programme");
+    char* a = (char*)malloc(30 * sizeof(char));
+    if (a == NULL) {
+        fprintf(stderr, "Erreur d'allocation mémoire\n");
         exit(1);
-        break;
+    }
+
+    int num_player = search_coordinate_in_tab_penguin(i, j, game1);
+
+    if (num_player == 0) {
+        strcpy(a, "    ");
+    } 
+    else {
+        char* color;
+        switch (num_player) {
+            case 1: color = RED; break;
+            case 2: color = YELLOW; break;
+            case 3: color = GREEN; break;
+            case 4: color = BLUE; break;
+            case 5: color = CYAN; break;
+            case 6: color = WHITE; break;
+            default:
+                free(a);
+                exit(1);
+        }
+        
+        strcpy(a, color);
+        strcat(a, "🐧P");
+        strcat(a, give_num_penguin(num_player, i, j, game1));
+        strcat(a, RESET);
     }
     return a;
-    
 }
 void afficher_grille(Game* game1){
      for(int i=0; i<game1->nb_column; i+=2){

@@ -363,12 +363,11 @@ void one_player_tour(int num_player, Game* game1){
     int choix_direction;
     int nombre_deplacement;
     int verify = 1;
-    int score = 0;
+    int score = game1->player[num_player-1].nb_penguin;
     if(verify_all_penguin_one_player(num_player, game1)==0){
         printf("tout tes pingouins sont bloques joueur %d, passage au joueur suivant\n", num_player);
     }
     else{
-        score = game1->player[num_player-1].nb_penguin;
         do{
         printf("quelle pingouin souhaite tu déplacer joueur %d,  ", num_player);
         afficher_coordinate_one_penguin(num_player, game1);
@@ -392,9 +391,9 @@ void one_player_tour(int num_player, Game* game1){
             scanf("%d", &nombre_deplacement);
         }while(verify_nombre_deplacement(nombre_deplacement, choix_direction, num_penguin, num_player,  game1)==0);
         move_total(nombre_deplacement, num_penguin, choix_direction, num_player, game1);
+        afficher_grille(game1);
         printf("tu as gagné %d points ! \n", game1->player[num_player-1].score_player - score);
     }
-    afficher_grille(game1);
 
 }
 void all_player_tour(Game* game1){
