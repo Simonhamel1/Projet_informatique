@@ -1,1 +1,1 @@
-.x
+#include "afficher.c"

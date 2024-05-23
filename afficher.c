@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include<stdlib.h>
+#include "structure.h"
+#include "all_fonction.h"
 #define RESET "\033[0m"
 #define BLACK "\033[30m"
 #define RED "\033[31m"

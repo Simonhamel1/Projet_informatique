@@ -4,6 +4,7 @@
 #include "structure.h"
 #include "afficher.c"
 #include "tour_joueur.c"
+#include "all_fonction.h"
 
 void create_tab_box(Game* game1) {
     Box** box1 = malloc(sizeof(Box*) * (*game1).nb_ligne);   // Allouer de la mémoire pour un tableau de pointeurs de Box
@@ -231,8 +232,7 @@ int main() {
     put_penguin_on_tab(pointer_game1);
     put_penguin_on_box(pointer_game1);
     afficher_grille(pointer_game1);
-    Player_tour(1, pointer_game1);
-    afficher_grille(pointer_game1);
+    game_total(pointer_game1);
 
     return 0;
 }
