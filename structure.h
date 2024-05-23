@@ -3,11 +3,12 @@
 typedef struct{
     int x;
     int y;
-}Coordinate;
+} Coordinate;
+
 typedef struct{    // Définition d'une structure représentant une case (Box) dans le jeu
     int existence; // Indique si la case existe (1) ou non (0)
-    int nb_fish;   // Indique le nombre de poissons de la case
-    int penguin;   // Indique s'il y a un pingouin (1) ou non(0) sur cette case
+    int nb_fish;   // Indique le nombre de poissons dans la case
+    int penguin;   // Indique s'il y a un pingouin (1) ou non (0) sur cette case
 } Box;
 
 
