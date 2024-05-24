@@ -50,7 +50,7 @@ char* give_num_penguin(int num_player, int i, int j, Game* game1){
 char* give_caractere_penguin(int i, int j, Game* game1){
     char* a = (char*)malloc(30 * sizeof(char));
     if (a == NULL) {
-        fprintf(stderr, "Erreur d'allocation mémoire\n");
+        printf("Erreur d'allocation mémoire\n");
         exit(1);
     }
 
@@ -62,19 +62,31 @@ char* give_caractere_penguin(int i, int j, Game* game1){
     else {
         char* color;
         switch (num_player) {
-            case 1: color = RED; break;
-            case 2: color = YELLOW; break;
-            case 3: color = GREEN; break;
-            case 4: color = BLUE; break;
-            case 5: color = CYAN; break;
-            case 6: color = WHITE; break;
+            case 1: 
+                color = RED; 
+                break;
+            case 2: 
+                color = YELLOW; 
+                break;
+            case 3: 
+                color = GREEN; 
+                break;
+            case 4: 
+                color = BLUE; 
+                break;
+            case 5: 
+                color = CYAN;
+                break;
+            case 6: 
+                color = WHITE; 
+                break;
             default:
                 free(a);
                 exit(1);
         }
         
         strcpy(a, color);
-        strcat(a, "🐧P");
+        strcat(a, "🐧");
         strcat(a, give_num_penguin(num_player, i, j, game1));
         strcat(a, RESET);
     }
@@ -123,13 +135,13 @@ void afficher_grille(Game* game1){
         while(k<game1->nb_column){
             if(game1->box[a][k].existence==1){
                 if(game1->box[a][k].penguin ==1){
-                    printf(" %s %c", give_caractere_penguin(a, k, game1),92);
+                    printf(" %s  %c", give_caractere_penguin(a, k, game1),92);
                 }
                 else if(game1->box[a][k].nb_fish>0){
                         printf(" 🐟   %c", 92);
                     }
                 else{
-                    printf(" %s %c", give_caractere_penguin(a, k, game1),92);
+                    printf(" %s  %c", give_caractere_penguin(a, k, game1),92);
                 }
             }
             else{
@@ -187,7 +199,7 @@ void afficher_grille(Game* game1){
             if(m<game1->nb_column && (a!=(game1->nb_ligne-1) || m!=(game1->nb_column-1))){
                 if(game1->box[a][m].existence){
                     if(a!=(game1->nb_ligne-1) && game1->box[a][m].penguin==1){
-                        printf(" %s %c", give_caractere_penguin(a, m, game1), 92);
+                        printf(" %s  %c", give_caractere_penguin(a, m, game1), 92);
                     }
                     else if(game1->box[a][m].nb_fish>0 && a!=(game1->nb_ligne-1)){
                         printf("  🐟  %c", 92);

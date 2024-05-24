@@ -5,6 +5,15 @@
 #include "afficher.c"
 #include "tour_joueur.c"
 #include "all_fonction.h"
+#define RESET "\033[0m"
+#define BLACK "\033[30m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN "\033[36m"
+#define WHITE "\033[37m"
 
 void create_tab_box(Game* game1) {
     Box** box1 = malloc(sizeof(Box*) * (*game1).nb_ligne);   // Allouer de la mémoire pour un tableau de pointeurs de Box
@@ -44,6 +53,8 @@ void generer_poisson(Game* game1) {
         for (int j = 0; j < game1->nb_column; j++) {
             if ((i != (game1->nb_ligne - 1)) || (j % 2 == 0)) {   // Vérifie la condition pour déterminer si des poissons doivent être générés dans cette case
                 game1->box[i][j].nb_fish = rand() % 3 + 1;        // Générer un nombre aléatoire de poissons entre 1 et 3 et l'affecter à la case actuelle
+                game1->box[i][j].score_box = game1->box[i][j].nb_fish;
+                game1->box[i][j].bad_fish = 0;
             }
         }
     }
@@ -89,13 +100,57 @@ void create_tab_player(Game * game1){
         exit(1);
     }
 }
-void playersname(Game* Game1){
+char* Give_color(int num_player){
+    char* color;
+    switch (num_player) {
+            case 1: 
+                color = RED; 
+                break;
+            case 2: 
+                color = YELLOW; 
+                break;
+            case 3: 
+                color = GREEN; 
+                break;
+            case 4: 
+                color = BLUE; 
+                break;
+            case 5: 
+                color = CYAN;
+                break;
+            case 6: 
+                color = WHITE; 
+                break;
+            default:
+            printf("erreur");
+                exit(1);
+        }
+        return color;
 
-    for ( int i = 0 ; i < Game1->nb_player ; i ++ ){
-        printf("Saisir nom du joueur %d : ", i+1);
-        scanf("%s",Game1->player[i].name);
+}
+void playersname(Game* game1){
+    char* name = malloc((20 + 1) * sizeof(char));
+    if (name == NULL) {
+        printf("Erreur d'allocation de mémoire pour le nom\n");
+        exit(1);
     }
 
+    for (int i = 0; i < game1->nb_player; i++) {
+        game1->player[i].name = malloc((21 + strlen(RESET)) * sizeof(char));
+        if (game1->player[i].name == NULL) {
+            printf("Erreur d'allocation de mémoire pour le joueur");
+            free(name);
+            exit(1);
+        }
+        printf("Rentre le prénom du joueur %d (maximum 20 lettres) : ", i + 1);
+        scanf("%20s", name);
+        const char* color = Give_color(i + 1);
+        strcpy(game1->player[i].name, color);
+        strcat(game1->player[i].name, name);
+        strcat(game1->player[i].name, RESET);
+    }
+
+    free(name);
 }
 void create_dimension(Game* game1){
     int number_penguin;
@@ -219,6 +274,39 @@ void put_penguin_on_box(Game* game1){
         }
     }
 }
+void creer_bad_fish(Game* game1){
+    int a;
+    for (int i = 0; i < game1->nb_ligne; i++) { // Parcours des lignes
+        for (int j = 0; j < game1->nb_column; j++) { // Parcours des colonnes
+            if (game1->box[i][j].nb_fish > 1){
+                a = rand()%2;
+                game1->box[i][j].bad_fish = a;
+            }
+        }
+    }
+}
+void Score_if_Bad_Fish(Game* game1){
+    for (int i = 0; i < game1->nb_ligne; i++){ // Parcours des lignes
+        for (int j = 0; j < game1->nb_column; j++) { // Parcours des colonnes
+            if (game1->box[i][j].nb_fish == 1){
+                game1->box[i][j].score_box = 1;
+            }
+            else if (game1->box[i][j].nb_fish == 2 && game1->box[i][j].bad_fish == 0){
+                game1->box[i][j].score_box = 2;
+            }
+            else if (game1->box[i][j].nb_fish == 2 && game1->box[i][j].bad_fish == 1){
+                game1->box[i][j].score_box = 0;
+            }
+            else if (game1->box[i][j].nb_fish == 3 && game1->box[i][j].bad_fish == 0){
+                game1->box[i][j].score_box = 3;
+            }
+            else if (game1->box[i][j].nb_fish == 3 && game1->box[i][j].bad_fish == 1){
+                game1->box[i][j].score_box = 1;
+            }
+        }
+    }
+}
+
 int main() {
     srand(time(NULL));
     system("chcp 65001");
@@ -226,13 +314,15 @@ int main() {
     Game* pointer_game1 = &game1;
     playernumber(pointer_game1);
     create_tab_player(pointer_game1);
+    playersname(pointer_game1);
     create_dimension(pointer_game1);
     create_tab_box(pointer_game1);
     verify_generer_poisson(pointer_game1);
     put_penguin_on_tab(pointer_game1);
     put_penguin_on_box(pointer_game1);
+    creer_bad_fish(pointer_game1);
+    Score_if_Bad_Fish(pointer_game1);
     afficher_grille(pointer_game1);
     game_total(pointer_game1);
-
     return 0;
 }

@@ -16,7 +16,7 @@ void replace_coordinate_in_tab_penguin(int i, int j, int k, int l, Game* game1){
         }
     }
 }
-void move_haut_droite(int num_penguin, int num_player, Game* game1){
+void move_haut_droite(int num_penguin, int num_player, Game* game1, int* nb_pourri){
     int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x;
     int j = game1->player[num_player-1].tab_penguin[num_penguin-1].y;
     if(j%2==0){
@@ -25,31 +25,37 @@ void move_haut_droite(int num_penguin, int num_player, Game* game1){
         i--;
         j++;
         game1->box[i][j].penguin = 1;
-        game1->player[num_player-1].score_player += game1->box[i][j].nb_fish;
+        game1->player[num_player-1].score_player += game1->box[i][j].score_box;
     }
     else{
         game1->box[i][j].existence = 0;
         game1->box[i][j].penguin = 0;
         j++;
-        game1->player[num_player-1].score_player += game1->box[i][j].nb_fish;
+        game1->player[num_player-1].score_player += game1->box[i][j].score_box;
         game1->box[i][j].penguin = 1;
 
     }
     game1->player[num_player-1].tab_penguin[num_penguin-1].x = i;
     game1->player[num_player-1].tab_penguin[num_penguin-1].y = j;
+    if(game1->box[i][j].bad_fish){
+            *nb_pourri = *nb_pourri + 1;
+        }
 
 }
-void move_haut(int num_penguin, int num_player, Game* game1){
+void move_haut(int num_penguin, int num_player, Game* game1, int* nb_pourri){
     int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x;
     int j = game1->player[num_player-1].tab_penguin[num_penguin-1].y;
     game1->box[i][j].existence = 0;
     i--;
     game1->box[i][j].penguin = 1;
-    game1->player[num_player-1].score_player += game1->box[i][j].nb_fish;
+    game1->player[num_player-1].score_player += game1->box[i][j].score_box;
     game1->player[num_player-1].tab_penguin[num_penguin-1].x = i;
     game1->player[num_player-1].tab_penguin[num_penguin-1].y = j;
+    if(game1->box[i][j].bad_fish){
+            *nb_pourri = *nb_pourri + 1;
+        }
 }
-void move_haut_gauche(int num_penguin, int num_player, Game* game1){
+void move_haut_gauche(int num_penguin, int num_player, Game* game1, int* nb_pourri){
     int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x;
     int j = game1->player[num_player-1].tab_penguin[num_penguin-1].y;
     if(j%2==0){
@@ -58,20 +64,23 @@ void move_haut_gauche(int num_penguin, int num_player, Game* game1){
         i--;
         j--;
         game1->box[i][j].penguin = 1;
-        game1->player[num_player-1].score_player += game1->box[i][j].nb_fish;
+        game1->player[num_player-1].score_player += game1->box[i][j].score_box;
     }
     else{
         game1->box[i][j].existence = 0;
         game1->box[i][j].penguin = 0;
         j--;
-        game1->player[num_player-1].score_player += game1->box[i][j].nb_fish;
+        game1->player[num_player-1].score_player += game1->box[i][j].score_box;
         game1->box[i][j].penguin = 1;
 
     }
+    if(game1->box[i][j].bad_fish){
+            *nb_pourri = *nb_pourri + 1;
+        }
     game1->player[num_player-1].tab_penguin[num_penguin-1].x = i;
     game1->player[num_player-1].tab_penguin[num_penguin-1].y = j;
 }
-void move_bas_droite(int num_penguin, int num_player, Game* game1){
+void move_bas_droite(int num_penguin, int num_player, Game* game1, int* nb_pourri){
     int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x;
     int j = game1->player[num_player-1].tab_penguin[num_penguin-1].y;
     if(j%2==0){
@@ -79,32 +88,38 @@ void move_bas_droite(int num_penguin, int num_player, Game* game1){
         game1->box[i][j].penguin = 0;
         j++;
         game1->box[i][j].penguin = 1;
-        game1->player[num_player-1].score_player += game1->box[i][j].nb_fish;
+        game1->player[num_player-1].score_player += game1->box[i][j].score_box;
     }
     else{
         game1->box[i][j].existence = 0;
         game1->box[i][j].penguin = 0;
         j++;
         i++;
-        game1->player[num_player-1].score_player += game1->box[i][j].nb_fish;
+        game1->player[num_player-1].score_player += game1->box[i][j].score_box;
         game1->box[i][j].penguin = 1;
 
     }
+    if(game1->box[i][j].bad_fish){
+            *nb_pourri = *nb_pourri + 1;
+        }
     game1->player[num_player-1].tab_penguin[num_penguin-1].x = i;
     game1->player[num_player-1].tab_penguin[num_penguin-1].y = j;
 }
-void move_bas(int num_penguin, int num_player, Game* game1){
+void move_bas(int num_penguin, int num_player, Game* game1, int* nb_pourri){
     int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x;
     int j = game1->player[num_player-1].tab_penguin[num_penguin-1].y;
     game1->box[i][j].existence = 0;
     game1->box[i][j].penguin = 0;
     i++;
     game1->box[i][j].penguin = 1;
-    game1->player[num_player-1].score_player += game1->box[i][j].nb_fish;
+    game1->player[num_player-1].score_player += game1->box[i][j].score_box;
     game1->player[num_player-1].tab_penguin[num_penguin-1].x = i;
     game1->player[num_player-1].tab_penguin[num_penguin-1].y = j;
+    if(game1->box[i][j].bad_fish){
+            *nb_pourri = *nb_pourri + 1;
+        }
 }
-void move_bas_gauche(int num_penguin, int num_player, Game* game1){
+void move_bas_gauche(int num_penguin, int num_player, Game* game1, int* nb_pourri){
     int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x;
     int j = game1->player[num_player-1].tab_penguin[num_penguin-1].y;
     if(j%2==0){
@@ -112,17 +127,19 @@ void move_bas_gauche(int num_penguin, int num_player, Game* game1){
         game1->box[i][j].penguin = 0;
         j--;
         game1->box[i][j].penguin = 1;
-        game1->player[num_player-1].score_player += game1->box[i][j].nb_fish;
+        game1->player[num_player-1].score_player += game1->box[i][j].score_box;
     }
     else{
         game1->box[i][j].existence = 0;
         game1->box[i][j].penguin = 0;
         j--;
         i++;
-        game1->player[num_player-1].score_player += game1->box[i][j].nb_fish;
+        game1->player[num_player-1].score_player += game1->box[i][j].score_box;
         game1->box[i][j].penguin = 1;
-
     }
+    if(game1->box[i][j].bad_fish){
+            *nb_pourri = *nb_pourri + 1;
+        }
     game1->player[num_player-1].tab_penguin[num_penguin-1].x = i;
     game1->player[num_player-1].tab_penguin[num_penguin-1].y = j;
 }
@@ -202,26 +219,26 @@ int verify_bas_droite(int i, int j, Game* game1){
         return 0;
     }
 }
-void one_move(int choix_deplacement, int num_penguin, int num_player, Game* game1){
+void one_move(int choix_deplacement, int num_penguin, int num_player, Game* game1, int* nb_pourri){
     switch (choix_deplacement)
     {
     case 1 :
-        move_haut_gauche(num_penguin, num_player, game1);
+        move_haut_gauche(num_penguin, num_player, game1, nb_pourri);
         break;
     case 2 :
-        move_haut(num_penguin, num_player, game1);
+        move_haut(num_penguin, num_player, game1, nb_pourri);
         break;
     case 3 :
-        move_haut_droite(num_penguin, num_player, game1);
+        move_haut_droite(num_penguin, num_player, game1, nb_pourri);
         break;
     case 4 :
-        move_bas_gauche(num_penguin, num_player, game1);
+        move_bas_gauche(num_penguin, num_player, game1, nb_pourri);
         break;
     case 5 :
-        move_bas(num_penguin, num_player, game1);
+        move_bas(num_penguin, num_player, game1, nb_pourri);
         break;
     case 6 :
-        move_bas_droite(num_penguin, num_player, game1);
+        move_bas_droite(num_penguin, num_player, game1, nb_pourri);
         break;
     
     }
@@ -353,23 +370,52 @@ int verify_nombre_deplacement(int nombre_deplacement, int choix_deplacement, int
     }
     return verify;
 }
-void move_total(int nombre_deplacement, int num_penguin, int choix_deplacement, int num_player, Game* game1){
+int max_deplacement(int choix_deplacement, int num_penguin, int num_player, Game* game1){
+    int nombre_deplacement = 1;
+    while(verify_nombre_deplacement(nombre_deplacement+1, choix_deplacement, num_penguin, num_player, game1)){
+        nombre_deplacement++;
+    }
+    return nombre_deplacement;
+}
+void move_total(int nombre_deplacement, int num_penguin, int choix_deplacement, int num_player, Game* game1, int * nb_pourri){
     for(int i=0; i<nombre_deplacement; i++){
-        one_move(choix_deplacement, num_penguin, num_player, game1);
+        one_move(choix_deplacement, num_penguin, num_player, game1, nb_pourri);
+    }
+}
+void choice_number_move(int choix_direction, int num_penguin, int num_player, Game* game1, int* nb_pourri){
+    int choice = 0;
+    int max;
+    int nombre_deplacement;
+    do{
+        printf("veux tu choisir ton nombre de déplacement : 1 ou faire le nombre maximum : 2\n");
+        scanf("%d", &choice);
+    }while(choice!=1 && choice!=2);
+    if(choice == 1){
+        do{
+            printf("choisi un nombre de deplacement valide");
+            scanf("%d", &nombre_deplacement);
+        }while(verify_nombre_deplacement(nombre_deplacement, choix_direction, num_penguin, num_player,  game1)==0);
+        move_total(nombre_deplacement, num_penguin, choix_direction, num_player, game1, nb_pourri);
+    }
+    else if(choice == 2){
+        max = max_deplacement(choix_direction, num_penguin, num_player, game1);
+        move_total(max, num_penguin, choix_direction, num_player, game1, nb_pourri);
     }
 }
 void one_player_tour(int num_player, Game* game1){
+    int pourri=0;
+    int * nb_pourri = &pourri;
     int num_penguin;
     int choix_direction;
     int nombre_deplacement;
     int verify = 1;
-    int score = game1->player[num_player-1].nb_penguin;
+    int score = game1->player[num_player-1].score_player;
     if(verify_all_penguin_one_player(num_player, game1)==0){
-        printf("tout tes pingouins sont bloques joueur %d, passage au joueur suivant\n", num_player);
+        printf("tout tes pingouins sont bloques %s, passage au joueur suivant\n", game1->player[num_player-1].name);
     }
     else{
         do{
-        printf("quelle pingouin souhaite tu déplacer joueur %d,  ", num_player);
+        printf("quelle pingouin souhaite tu déplacer %s,  ", game1->player[num_player-1].name);
         afficher_coordinate_one_penguin(num_player, game1);
         printf(" :\n");
         scanf("%d", &num_penguin);
@@ -386,12 +432,11 @@ void one_player_tour(int num_player, Game* game1){
         }
         }while(verify);
         choix_direction = choose_direction(num_penguin, num_player, game1);
-        do{
-            printf("choisi ton nombre de deplacement");
-            scanf("%d", &nombre_deplacement);
-        }while(verify_nombre_deplacement(nombre_deplacement, choix_direction, num_penguin, num_player,  game1)==0);
-        move_total(nombre_deplacement, num_penguin, choix_direction, num_player, game1);
+        choice_number_move(choix_direction, num_penguin, num_player, game1, nb_pourri);
         afficher_grille(game1);
+        if(nb_pourri>0){
+            printf("tu as mangé %d poissons pourri", pourri);
+        }
         printf("tu as gagné %d points ! \n", game1->player[num_player-1].score_player - score);
     }
 
@@ -406,7 +451,7 @@ void all_player_tour(Game* game1){
 }
 void printf_score_player(Game* game1){
     for(int i=0; i<game1->nb_player; i++){
-        printf("score J_%d : %d, ", i+1, game1->player[i].score_player);
+        printf("score %s : %d, ", game1->player[i].name, game1->player[i].score_player);
     }
     printf("\n");
 }
@@ -425,7 +470,7 @@ void game_total(Game* game1){
     while(verify_all_penguin_all_player(game1)==1){
         all_player_tour(game1);
         printf_score_player(game1);
-        printf("Pour le moment joueur %d gagne ...\n", index_max_score_player(game1));
+        printf("Pour le moment %s gagne ...\n", game1->player[index_max_score_player(game1)-1].name);
     }
-    printf("félicitation au grand gagnant joueur %d !", index_max_score_player(game1));
+    printf("félicitation au grand gagnant %s !", game1->player[index_max_score_player(game1)-1].name);
 }
