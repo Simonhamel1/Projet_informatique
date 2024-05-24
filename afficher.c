@@ -140,7 +140,6 @@ void afficher_grille(Game* game1){  // Procèdure  pour afficher le plateau de j
                 else if(game1->box[a][k].nb_fish>0){
                         printf(" 🐟   %c", 92);  // Affiche un poisson dans une case
                     }
-                    }
                 else{
                     printf(" %s  %c", give_caractere_penguin(a, k, game1),92);
                 }
@@ -167,10 +166,8 @@ void afficher_grille(Game* game1){  // Procèdure  pour afficher le plateau de j
                 if(game1->box[a][l].penguin==1){
                     printf("      /");  // Affiche une ligne de cases avec des pingouins
                 }
-                }
                 else if(game1->box[a][l].nb_fish==3){
                     printf("🐟 🐟 /"); // Affiche une ligne de cases avec deux poissons
-                }
                 }
                 else if(game1->box[a][l].nb_fish==2){
                     printf("   🐟 /"); // Affiche une ligne de cases avec un poisson
@@ -218,4 +215,4 @@ void afficher_grille(Game* game1){  // Procèdure  pour afficher le plateau de j
             m++; // Passage à la colonne suivante
         }
         printf("\n"); // Passage à la ligne suivante
-    }}
+     }}
