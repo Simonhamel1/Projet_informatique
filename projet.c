@@ -306,7 +306,100 @@ void Score_if_Bad_Fish(Game* game1){
         }
     }
 }
-
+void explication(){
+    printf(CYAN "Bonjour et bienvenue sur CyFish\n");
+    printf("Vous pouvez jouer de 2 à 6 joueurs et même contre des ordinateurs\n");
+    printf("Chaque joueur débute avec un nombre de pingouin déterminé par le jeu (ou choisi dans les paramètres).\n");
+    printf("L'objectif est de ramasser un maximum de poisson.\n");
+    printf("Afin de ramasser des poissons vous avez la possibilité chaque tour de déplacer un pingouin dans une direction de votre choix et de la distance de votre choix.\n");
+    printf("Mais attention en fonction des variantes, les poissons valent plus ou moins de points\n");
+    printf("Vous avez à choisir entre six directions\n\n");
+    printf("        ____\n");
+    printf("       /    %c\n",92);
+    printf("  ____/   2  %c____\n",92);
+    printf(" /    %c      /    %c\n",92,92);
+    printf("/   1  %c____/   3  %c\n",92,92);
+    printf("%c      /    %c      /\n",92,92);
+    printf(" %c____/  🐧  %c____/\n",92,92);
+    printf(" /    %c      /    %c\n",92,92);
+    printf("/   4  %c____/   5  %c\n",92,92);
+    printf("%c      /    %c      /\n",92,92);
+    printf(" %c____/   5  %c____/\n",92,92);
+    printf("      %c      /\n",92,92);
+    printf("       %c____/\n",92,92);
+    printf("\n");
+    printf("Pour choisir la direction numéro une (haut_gauche), vous devrez entrer 1\n");
+    printf("Pour choisir la direction numéro deux (haut), vous devrez entrer 2\n");
+    printf("Pour choisir la direction numéro trois (haut_droite), vous devrez entrer 3\n");
+    printf("Pour choisir la direction numéro quatre (bas_gauche), vous devrez entrer 4\n");
+    printf("Pour choisir la direction numéro cinq (bas), vous devrez entrer 5\n");
+    printf("Pour choisir la direction numéro six (bas_droite), vous devrez entrer 6\n");
+    printf("Prenez garde il y a différents facteurs qui pourraient contraindre vos déplacements, il est impossible de sortir de la carte, ou de mettre un pingouin sur une case possèdent déjà un pingouin.\n");
+    printf("De plus lorsque vous passez sur une case elle disparaît et vous en mangez les poissons il est ensuite impossible pour quiconque d'aller sur cette case.\n" RESET);
+}
+void parameters(Game* game1){
+    int choice;
+    int number_penguin;
+    printf("Bienvenue dans les parametres ! Que voulez vous faire ?\n");
+    do{
+        printf("1: changer les dimensions de la grille, 2: changer le nombre de pingouin par joueurs, 3: choisir les variantes de poissons.\n");
+        printf("0: quitter les paramètres.\n");
+        scanf("%d", &choice);
+    }while(choice!=0 && choice!=1 && choice!=2 && choice!=3);
+    switch(choice){
+        case 0 :
+            break;
+        case 1 :
+            do{
+                printf("choississez le nombre de colonne entre 9 et 20\n");
+                scanf("%d", &game1->nb_column);
+            }while(game1->nb_column<9 || game1->nb_column>20);
+            printf("\n");
+            do{
+                printf("choississez le nombre de ligne entre 9 et 20\n");
+                scanf("%d", &game1->nb_ligne);
+            }while(game1->nb_ligne<9 || game1->nb_ligne>20);
+            parameters(game1);
+            break;
+        case 2 :
+            do{
+            printf("combien de pingouin voulez vous par joueur (entre 1 et 6)");
+            scanf("%d", &number_penguin);
+            }while(number_penguin<1 || number_penguin>6);
+            for(int i=0; i<game1->nb_player; i++){
+                game1->player[i].nb_penguin = number_penguin;
+            }
+            parameters(game1);
+            break;
+        case 3 :
+            break;
+            }
+    }
+void start_presentation(Game* game1){
+    int choice = 0;
+    printf("Que veux tu faire ?\n");
+    do{
+        printf("1 : jouer avec les parametres par defaut, 2 : Changer les parametres, 3 : voir les explications du jeu\n");
+        scanf("%d", &choice);
+    }while(choice!=1 && choice!=2 && choice!=3);
+    switch(choice){
+        case 1 :
+            afficher_grille(game1);
+            game_total(game1);
+            break;
+        case 2 :
+            parameters(game1);
+            start_presentation(game1);
+            break;
+        case 3 :
+            explication();
+            do{
+                printf("quand vous voulez quitter  les explications tapez 0 :\n");
+                scanf("%d", &choice);
+            }while(choice!=0);
+            start_presentation(game1);
+    }
+}
 int main() {
     srand(time(NULL));
     system("chcp 65001");
@@ -322,7 +415,6 @@ int main() {
     put_penguin_on_box(pointer_game1);
     creer_bad_fish(pointer_game1);
     Score_if_Bad_Fish(pointer_game1);
-    afficher_grille(pointer_game1);
-    game_total(pointer_game1);
+    start_presentation(pointer_game1);
     return 0;
 }
