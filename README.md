@@ -61,5 +61,5 @@ Une fois le programme executé vous aurais la possibilité de choisir différent
 
 
 -Yaël Saoudi--Méar
--Antoine l'Anglais--Simon
+-Antoine Langlais--Simon
 -Adrien Girard--Ravelonarisoa
