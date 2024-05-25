@@ -434,7 +434,7 @@ void one_player_tour(int num_player, Game* game1){
         choix_direction = choose_direction(num_penguin, num_player, game1);
         choice_number_move(choix_direction, num_penguin, num_player, game1, nb_pourri);
         afficher_grille(game1);
-        if(nb_pourri>0){
+        if(pourri>0){
             printf("tu as mangé %d poissons pourri \n", pourri);
         }
         printf("tu as gagné %d points ! \n", game1->player[num_player-1].score_player - score);

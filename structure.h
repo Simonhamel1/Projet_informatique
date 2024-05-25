@@ -11,6 +11,7 @@ typedef struct{    // Définition d'une structure représentant une case (Box) d
     int penguin;   // Indique s'il y a un pingouin (1) ou non(0) sur cette case
     int score_box;
     int bad_fish;
+    int* tab_fish;
 } Box;
 
 

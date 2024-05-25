@@ -40,6 +40,12 @@ char* give_num_penguin(int num_player, int i, int j, Game* game1){ // Définitio
                         case 3 :
                             return "4"; // Retourne "4" pour le deuxième pingouin
                             break;
+                        case 4 :
+                            return "5";
+                            break;
+                        case 5 :
+                            return "6";
+                            break;
                         default :  // Cas par défaut (si l'indice est supérieur à 3)
                             return "."; // Retourne "." pour indiquer un pingouin non spécifié
                     }
