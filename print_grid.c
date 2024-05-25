@@ -1,8 +1,14 @@
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include "verify_move.h"
+#include "player_tour.h"
+#include "move.h"
+#include "verify_move.h"
+#include "print_grid.h"
 #include "structure.h"
-#include "all_fonction.h"
+#include <stddef.h>
 #define RESET "\033[0m"
 #define BLACK "\033[30m"
 #define RED "\033[31m"
@@ -53,7 +59,7 @@ char* give_num_penguin(int num_player, int i, int j, Game* game1){ // Définitio
         }
     }
 }
-char* give_caractere_penguin(int i, int j, Game* game1){
+char* give_character_penguin(int i, int j, Game* game1){
     char* a = (char*)malloc(30 * sizeof(char));
     if (a == NULL) {
         printf("Erreur d'allocation mémoire\n");
@@ -98,7 +104,7 @@ char* give_caractere_penguin(int i, int j, Game* game1){
     }
     return a;  // Retourne la chaîne représentant le pingouin
 }
-void afficher_grille(Game* game1){  // Procèdure  pour afficher le plateau de jeu
+void print_grid(Game* game1){  // Procèdure  pour afficher le plateau de jeu
      for(int i=0; i<game1->nb_column; i+=2){ // Boucle pour afficher la ligne supérieure de la grille
                 printf("  ____      "); // Affiche les bords de la grille
      }
@@ -141,13 +147,13 @@ void afficher_grille(Game* game1){  // Procèdure  pour afficher le plateau de j
         while(k<game1->nb_column){ // Boucle pour parcourir chaque colonne de la grille
             if(game1->box[a][k].existence==1){ // Vérifie si la case existe
                 if(game1->box[a][k].penguin ==1){
-                    printf(" %s  %c", give_caractere_penguin(a, k, game1),92);
+                    printf(" %s  %c", give_character_penguin(a, k, game1),92);
                 }
                 else if(game1->box[a][k].nb_fish>0){
                         printf(" 🐟   %c", 92);  // Affiche un poisson dans une case
                     }
                 else{
-                    printf(" %s  %c", give_caractere_penguin(a, k, game1),92);
+                    printf(" %s  %c", give_character_penguin(a, k, game1),92);
                 }
             }
             else{
@@ -205,7 +211,7 @@ void afficher_grille(Game* game1){  // Procèdure  pour afficher le plateau de j
             if(m<game1->nb_column && (a!=(game1->nb_ligne-1) || m!=(game1->nb_column-1))){ // Vérifie s'il y a une colonne à afficher après la case
                 if(game1->box[a][m].existence){ // Vérifie si la case existe
                     if(a!=(game1->nb_ligne-1) && game1->box[a][m].penguin==1){
-                        printf(" %s  %c", give_caractere_penguin(a, m, game1), 92);
+                        printf(" %s  %c", give_character_penguin(a, m, game1), 92);
                     }
                     else if(game1->box[a][m].nb_fish>0 && a!=(game1->nb_ligne-1)){
                         printf("  🐟  %c", 92); // Affiche un poisson dans une case

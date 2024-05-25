@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
+#include "verify_move.h"
+#include "player_tour.h"
+#include "move.h"
+#include "verify_move.h"
+#include "print_grid.h"
 #include "structure.h"
-#include "afficher.c"
-#include "tour_joueur.c"
-#include "all_fonction.h"
 #define RESET "\033[0m"
 #define BLACK "\033[30m"
 #define RED "\033[31m"
@@ -48,7 +51,7 @@ int nb_fish1(Game* game1){ // Fonction qui compte le nombre de cases avec un seu
     }
     return count; // Retourne le nombre total de cases avec un seul poisson
 }
-void generer_poisson(Game* game1) { // Procédure pour générer des poissons sur le plateau de jeu
+void generate_fish(Game* game1) { // Procédure pour générer des poissons sur le plateau de jeu
     for (int i = 0; i < game1->nb_ligne; i++) { // Parcours des lignes
         for (int j = 0; j < game1->nb_column; j++) { // Parcours des colonnes
             if ((i != (game1->nb_ligne - 1)) || (j % 2 == 0)) {   // Vérifie la condition pour déterminer si des poissons doivent être générés dans cette case
@@ -59,25 +62,13 @@ void generer_poisson(Game* game1) { // Procédure pour générer des poissons su
         }
     }
 }
-void verify_generer_poisson(Game* game1){ // Procédure pour vérifier si le nombre de poissons sur le plateau est suffisant pour chaque joueur
+void verify_generate_fish(Game* game1){ // Procédure pour vérifier si le nombre de poissons sur le plateau est suffisant pour chaque joueur
         int nb_penguin = game1->nb_player * game1->player[0].nb_penguin; // Calcule le nombre total de pingouins sur le plateau
     while(nb_fish1(game1)<nb_penguin){ // Tant que le nombre de cases avec un seul poisson est inférieur au nombre total de pingouins
-        generer_poisson(game1); // Génère plus de poissons sur le plateau
+        generate_fish(game1); // Génère plus de poissons sur le plateau
     } 
 }
-void etat_poisson(Game*  game1){ // Procédure pour afficher l'état des poissons sur le plateau de jeu
-    for(int i=0; i<game1->nb_ligne; i++){ // Parcours des lignes
-        for(int j=0; j<game1->nb_column; j++){ // Parcours des colonnes
-            if(i==(game1->nb_ligne-1) && j%2==1){ // Vérifie si la case est hors du plateau pour afficher 0
-                printf("0 ", game1->box[i][j].nb_fish);
-            }
-            else{ // Affiche le nombre de poissons dans la case
-                printf("%d ", game1->box[i][j].nb_fish);
-            }
-        }
-        printf("\n");
-    }
-}
+
 void playernumber(Game* Game1) { // Procédure pour déterminer le nombre de joueurs
     int result;
     do {
@@ -154,6 +145,7 @@ void playersname(Game* game1){
 }
 void create_dimension(Game* game1){ // Procédure pour créer les dimensions du plateau de jeu en fonction du nombre de joueurs
     int number_penguin; // Variable pour stocker le nombre de pingouins par joueur
+
     switch (game1->nb_player){ // Sélection des dimensions du plateau en fonction du nombre de joueurs
         case 2 : // Si deux joueurs sont sélectionnés
             game1->nb_ligne =10; // Définir le nombre de lignes à 10
@@ -187,20 +179,8 @@ void create_dimension(Game* game1){ // Procédure pour créer les dimensions du 
         game1->player[i].nb_penguin = number_penguin; // Assignation du nombre de pingouins par joueur
     }
 }
-int index_active_player(Game* game1){ // Fonction pour trouver l'index du joueur actif
-    for(int i=0; i<game1->nb_player; i++){ // Parcourir tous les joueurs
-        if(game1->player[i].active = 1){ // Vérifier si le joueur est actif
-            return i; // Retourner l'index du joueur actif
-        }
-    }
-}
-void print_coordinate_fish1(Game* game1){ // Procédure pour afficher les coordonnées des poissons 
-    for(int i=0; i<nb_fish1(game1); i++){ // Parcourir tous les poissons 
-        if(game1->tab_fish1[i].x!=-1 && game1->tab_fish1[i].y!= -1){ // Vérifier si les coordonnées du poisson sont valides
-            printf("%d :(%d, %d)", i+1, game1->tab_fish1[i].x, game1->tab_fish1[i].y); // Afficher les coordonnées du poisson
-        }
-    }
-}
+
+
 void create_tab_penguin(Game* game1){ // Procédure pour créer un tableau de coordonnées de pingouins pour chaque joueur
     for(int i=0; i<game1->nb_player; i++){ // Parcourir tous les joueurs
         game1->player[i].tab_penguin = malloc(sizeof(Coordinate) * game1->player[i].nb_penguin);
@@ -242,6 +222,13 @@ void put_coordinate_penguin(Game* game1){ // Procédure pour placer les coordonn
             game1->player[i].tab_penguin[j].y = game1->tab_fish1[index].y; // Affecter la coordonnée y du pingouin
             game1->tab_fish1[index].x = -1; // Marquer la coordonnée x du poisson comme utilisée
             game1->tab_fish1[index].y = -1; // Marquer la coordonnée y du poisson comme utilisée
+        }
+    }
+}
+void print_coordinate_fish1(Game* game1){ // Procédure pour afficher les coordonnées des poissons 
+    for(int i=0; i<nb_fish1(game1); i++){ // Parcourir tous les poissons 
+        if(game1->tab_fish1[i].x!=-1 && game1->tab_fish1[i].y!= -1){ // Vérifier si les coordonnées du poisson sont valides
+            printf("%d :(%d, %d)", i+1, game1->tab_fish1[i].x, game1->tab_fish1[i].y); // Afficher les coordonnées du poisson
         }
     }
 }
@@ -294,20 +281,6 @@ void put_penguin_on_tab(Game* game1){ // Procédure pour placer les pingouins su
 
 
 }
-void print_coordinate_penguin_one_player(int num_player, Game* game1){ // Procédure pour afficher les coordonnées des pingouins d'un joueur
-        for(int j=0; j<game1->player[num_player].nb_penguin; j++){ // Parcourir tous les pingouins du joueur
-            printf(" p%d :", j+1); // Afficher le numéro de pingouin
-            printf("(%d, %d)", game1->player[num_player].tab_penguin[j].x, game1->player[num_player].tab_penguin[j].y); // Afficher les coordonnées du pingouin
-
-        }
-        printf("\n");
-    }
-void print_coordinate_penguin_all_player(Game* game1){ // Procédure pour afficher les coordonnées de tous les pingouins de tous les joueurs
-    for(int i=0; i<game1->nb_player; i++){ // Parcourir tous les joueurs 
-        print_coordinate_penguin_one_player(i, game1); // Afficher les coordonnées des pingouins du joueur actuel
-        printf("\n");
-    }
-}
 void put_penguin_on_box(Game* game1){ // Procédure pour placer les pingouins sur le plateau  de jeu
     put_penguin_on_tab(game1);
     for(int i=0; i<game1->nb_player; i++){ // Parcourir tous les joueurs
@@ -316,26 +289,8 @@ void put_penguin_on_box(Game* game1){ // Procédure pour placer les pingouins su
         }
     }
 }
-void creer_bad_fish(Game* game1){
-    int alea;
-    for (int i = 0; i < game1->nb_ligne; i++) { // Parcours des lignes
-        for (int j = 0; j < game1->nb_column; j++) { // Parcours des colonnes
-            if (game1->box[i][j].nb_fish > 1){
-                alea = rand()%2;
-                game1->box[i][j].bad_fish = alea;
-            }
-        }
-    }
-}
-void alea_golden_fish(Game* game1){
-    for(int i=0; i<game1->nb_ligne;i++){
-        for(int j=0; j<game1->nb_column; j++){
-            for(int k=0; k<game1->box[i][j].nb_fish; k++){
-                game1->box[i][j].tab_fish[k] = rand()%3 + 1;
-            }
-        }
-    }
-}
+
+
 void create_tab_fish(Game* game1){
     for(int i=0; i<game1->nb_ligne; i++){
         for(int j=0; j<game1->nb_column; j++){
@@ -348,13 +303,16 @@ void create_tab_fish(Game* game1){
     }
 }
 void put_score_on_box(Game* game1){
-    int somme = 0;
+    int sum;
     for(int i=0; i<game1->nb_ligne; i++){
         for(int j=0; j<game1->nb_column; j++){
-            for(int k=0; k<game1->box[i][j].nb_fish; k++){
-                somme+= game1->box[i][j].tab_fish[k];
+            if ((i != (game1->nb_ligne - 1)) || (j % 2 == 0)){
+                sum = 0;
+                for(int k=0; k<game1->box[i][j].nb_fish; k++){
+                    sum+= game1->box[i][j].tab_fish[k];
+                }
+                game1->box[i][j].score_box = sum;
             }
-            game1->box[i][j].score_box = somme;
         }
     }
 }
@@ -362,41 +320,71 @@ void fish_normal_variant(Game* game1){
     create_tab_fish(game1);
     for(int i=0; i<game1->nb_ligne; i++){
         for(int j=0; j<game1->nb_column; j++){
-            for(int k=0; k<game1->box[i][j].nb_fish; k++){
-                game1->box[i][j].tab_fish[k] = 1;
+            if ((i != (game1->nb_ligne - 1)) || (j % 2 == 0)) { 
+                for(int k=0; k<game1->box[i][j].nb_fish; k++){
+                    game1->box[i][j].tab_fish[k] = 1;
+                }
+            }
+        }
+    }
+    put_score_on_box(game1);
+}
+void create_bad_fish(Game* game1){
+    int alea;
+    for (int i = 0; i < game1->nb_ligne; i++) { // Parcours des lignes
+        for (int j = 0; j < game1->nb_column; j++) { // Parcours des colonnes
+            if ((i != (game1->nb_ligne - 1)) || (j % 2 == 0)) {
+                if (game1->box[i][j].nb_fish > 1){
+                    alea = rand()%2;
+                    game1->box[i][j].bad_fish = alea;
+                }
             }
         }
     }
 }
 void fish_rotten_variant(Game* game1){
     create_tab_fish(game1);
-    creer_bad_fish(game1);
+    create_bad_fish(game1);
     for(int i=0; i<game1->nb_ligne; i++){
         for(int j=0; j<game1->nb_column; j++){
-            if(game1->box[i][j].bad_fish = 1){
-                if(game1->box[i][j].nb_fish==2){
-                    game1->box[i][j].tab_fish[0] = -1;
-                    game1->box[i][j].tab_fish[1] = 1;
+            if ((i != (game1->nb_ligne - 1)) || (j % 2 == 0)){
+                if(game1->box[i][j].bad_fish == 1){
+                    if(game1->box[i][j].nb_fish==2){
+                        game1->box[i][j].tab_fish[0] = -1;
+                        game1->box[i][j].tab_fish[1] = 1;
+                    }
+                    else{
+                        game1->box[i][j].tab_fish[0] = -1;
+                        game1->box[i][j].tab_fish[1] = 1;
+                        game1->box[i][j].tab_fish[2] = 1;
+                    }
                 }
                 else{
-                    game1->box[i][j].tab_fish[0] = -1;
-                    game1->box[i][j].tab_fish[1] = 1;
-                    game1->box[i][j].tab_fish[2] = 1;
-                }
-            }
-            else{
-                for(int k=0; k<game1->box[i][j].nb_fish; k++){
-                    game1->box[i][j].tab_fish[k]= 1;
-                }
+                    for(int k=0; k<game1->box[i][j].nb_fish; k++){
+                        game1->box[i][j].tab_fish[k]= 1;
+                    }
 
+                }
             }
-            }
-            
         }
     }
+    put_score_on_box(game1);
+}
+void alea_golden_fish(Game* game1){
+    for(int i=0; i<game1->nb_ligne;i++){
+        for(int j=0; j<game1->nb_column; j++){
+            if ((i != (game1->nb_ligne - 1)) || (j % 2 == 0)){
+                for(int k=0; k<game1->box[i][j].nb_fish; k++){
+                    game1->box[i][j].tab_fish[k] = rand()%3 + 1;
+                }
+            }
+        }
+    }
+}
 void fish_golden_variant(Game* game1){
     create_tab_fish(game1);
     alea_golden_fish(game1);
+    put_score_on_box(game1);
 }
 void play_variants(Game* game1){
     int choice;
@@ -407,15 +395,24 @@ void play_variants(Game* game1){
     }while(choice!=1 && choice!=2 && choice!=3);
     switch (choice){
         case 1 :
+            fish_normal_variant(game1);
             break;
         case 2 :
             fish_rotten_variant(game1);
             break;
         case 3 :
+            fish_golden_variant(game1);
             break;
 
     }
 
+}
+
+void ask_information_players(Game* game1){
+        playernumber(game1);
+        create_tab_player(game1);
+        create_dimension(game1);
+        playersname(game1);
 }
 void explication(){
     printf(CYAN "Bonjour et bienvenue sur CyFish\n");
@@ -491,31 +488,14 @@ void parameters(Game* game1){
             break;
             }
     }
-void play_game(Game* game1){
+void play_game_players(Game* game1){
     create_tab_box(game1);
-    verify_generer_poisson(game1);
-    afficher_grille(game1);
+    verify_generate_fish(game1);
+    print_grid(game1);
     put_penguin_on_box(game1);
     play_variants(game1);
-    afficher_grille(game1);
+    print_grid(game1);
     game_total(game1);
-}
-void ask_information_players(Game* game1){
-    int choice;
-    do{
-        printf("1: vous voulez jouer contre des joueurs, 2: vous voulez jouer contre des ordinateurs\n");
-        scanf("%d", &choice);
-    }while(choice!=1 && choice!=2);
-    switch(choice){
-        case 1:
-            playernumber(game1);
-            create_tab_player(game1);
-            playersname(game1);
-            break;
-        case 2 :
-            break;
-
-    }
 }
 void launch_game(Game* game1){
     int choice = 0;
@@ -526,7 +506,7 @@ void launch_game(Game* game1){
     }while(choice!=1 && choice!=2 && choice!=3);
     switch(choice){
         case 1 :
-            play_game(game1);
+            play_game_players(game1);
             break;
         case 2 :
             parameters(game1);
@@ -541,13 +521,65 @@ void launch_game(Game* game1){
             launch_game(game1);
     }
 }
+
+void one_player_name(int num_player, Game* game1){
+    game1->player[num_player-1].name = malloc(21 * sizeof(char));
+    printf("Rentre ton prénom (maximum 20 lettres) : ");
+    scanf("%20s", game1->player[num_player-1].name);
+}
+void play_game_computer(Game* game1){
+    create_tab_player(game1);
+    create_dimension(game1);
+    one_player_name(1, game1);
+    create_tab_box(game1);
+    verify_generate_fish(game1);
+    print_grid(game1);
+    create_tab_fish1(game1);
+    create_tab_penguin(game1); 
+    put_coordinate_fish1(game1);
+    put_coordinate_penguin(game1);
+    for(int i=0; i<game1->nb_player; i++){
+        for(int j=0; j<game1->player[i].nb_penguin; j++){
+            game1->box[game1->player[i].tab_penguin[j].x][game1->player[i].tab_penguin[j].y].penguin = 1;
+        }
+    }
+    play_variants(game1);
+    print_grid(game1);
+    game_total_computer(game1);
+}
+void launch_game_computer(Game* game1){
+    int choice;
+    do{
+        printf("contre combien d'ordinateur tu veux jouer ? (entre 1 et 5) :\n");
+        scanf("%d", &choice);
+    }while(choice<1 || choice>5);
+    game1->nb_player = choice + 1;
+    play_game_computer(game1);
+}
+
+void launch_all_game(Game* game1){
+    int choice;
+    do{
+        printf("1: vous voulez jouer contre des joueurs, 2: vous voulez jouer contre des ordinateurs\n");
+        scanf("%d", &choice);
+    }while(choice!=1 && choice!=2);
+    switch(choice){
+        case 1:
+            ask_information_players(game1);
+            launch_game(game1);
+            break;
+        case 2 :
+            launch_game_computer(game1);
+            break;
+
+    }
+}
+
 int main() {
     srand(time(NULL));
     system("chcp 65001");
     Game game1;
     Game* pointer_game1 = &game1;
-    ask_information_players(pointer_game1);
-    create_dimension(pointer_game1);
-    launch_game(pointer_game1);
+    launch_all_game(pointer_game1);
     return 0;
 }
