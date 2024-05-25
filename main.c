@@ -2,12 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "verify_move.h"
-#include "player_tour.h"
-#include "move.h"
-#include "verify_move.h"
-#include "print_grid.h"
-#include "structure.h"
+
+#include "players_tour.c"
+#include "print_grid.c"
 #define RESET "\033[0m"
 #define BLACK "\033[30m"
 #define RED "\033[31m"

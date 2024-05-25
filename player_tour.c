@@ -115,11 +115,3 @@ void all_player_tour(Game* game1){ // Procédure qui gère les tours de tous les
         
     }
 }
-void game_total(Game* game1){
-    while(verify_all_penguin_all_player(game1)==1){
-        all_player_tour(game1);
-        print_score_player(game1);
-        printf("Pour le moment %s gagne ...\n", game1->player[index_max_score_player(game1)-1].name);
-    }
-    printf("félicitation au grand gagnant %s !", game1->player[index_max_score_player(game1)-1].name);
-}

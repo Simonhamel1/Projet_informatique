@@ -1,13 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
-#include "verify_move.h"
-#include "player_tour.h"
-#include "move.h"
-#include "verify_move.h"
-#include "print_grid.h"
 #include "structure.h"
+#include <time.h>
 #include <stddef.h>
 #define RESET "\033[0m"
 #define BLACK "\033[30m"
