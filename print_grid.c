@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "structure.h"
+#include "print_grid.h"
 #include <time.h>
 #include <stddef.h>
 #define RESET "\033[0m"

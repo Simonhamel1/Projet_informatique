@@ -1,5 +1,6 @@
 #include "structure.h"
 #include "print_grid.h"
+#include "players_tour.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -3,8 +3,9 @@
 #include <string.h>
 #include <time.h>
 
-#include "players_tour.c"
-#include "print_grid.c"
+#include "players_tour.h"
+#include "print_grid.h"
+#include "structure.h"
 #define RESET "\033[0m"
 #define BLACK "\033[30m"
 #define RED "\033[31m"
