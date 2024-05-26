@@ -24,7 +24,7 @@ int search_coordinate_in_tab_penguin(int i, int j, Game* game1){ // Définition 
     }
     return 0; // Si les coordonnées ne correspondent à aucun pingouin, retourner 0
 }
-char* give_num_penguin(int num_player, int i, int j, Game* game1){ // Définition de la fonction pour donner le numéro du pingouin
+char* give_num_penguin(int num_player, int i, int j, Game* game1){ // Définition de la fonction pour donner le numéro du pingouin d'un joueur
     if(num_player!=0){ // Vérification si le numéro du joueur est différent de 0
         for(int k=0; k<game1->player[num_player-1].nb_penguin; k++){ // Parcours des pingouins du joueur spécifié
                 if(game1->player[num_player-1].tab_penguin[k].x == i && game1->player[num_player-1].tab_penguin[k].y == j){ // Si les coordonnées correspondent à celles d'un pingouin du joueur
@@ -54,7 +54,7 @@ char* give_num_penguin(int num_player, int i, int j, Game* game1){ // Définitio
         }
     }
 }
-char* give_character_penguin(int i, int j, Game* game1){  // Fonction qui attribue chaine de caractère " pingouin " à un joueur
+char* give_character_penguin(int i, int j, Game* game1){  // Fonction qui attribue une chaine de caractère " pingouin " à un joueur
     char* a = (char*)malloc(30 * sizeof(char)); // Alloue dynamiquement de la mémoire pour stocker le caractère du pingouin
     if (a == NULL) { // Vérifie si l'allocation mémoire a échouée
         printf("Erreur d'allocation mémoire\n"); // Affiche un message d'erreur en cas d'échec de l'allocation
@@ -99,6 +99,50 @@ char* give_character_penguin(int i, int j, Game* game1){  // Fonction qui attrib
     }
     return a;  // Retourne la chaîne représentant le pingouin
 }
+
+char* give_character_fish(int i, int j, int nb_fish, Game* game1) {// Fonction qui renvoie un caractère représentant les poissons dans une case donnée
+    // Allocation dynamique de mémoire pour stocker la chaîne de caractères représentant les poissons
+    char* a = (char*)malloc(30 * sizeof(char));
+    if (a == NULL) {
+        printf("erreur allocation dynamique");
+        exit(1);
+    }
+
+    // Utilisation d'un switch pour gérer le nombre de poissons
+    switch (nb_fish) {
+        case 1: // Vérifie le type du premier poisson dans la boîte
+    
+            if (game1->box[i][j].tab_fish[0] == 1 || game1->box[i][j].tab_fish[0] == -1) {
+                strcpy(a, "🐟");  // Poisson type 1 ou -1 (pour un état particulier)
+            } else if (game1->box[i][j].tab_fish[0] == 2) {
+                strcpy(a, "🐠");  // Poisson type 2
+            } else {
+                strcpy(a, "🦈");  // Poisson type 3
+            }
+            break;
+        case 2:// Vérifie les types des deux premiers poissons dans la boîte
+            if (game1->box[i][j].tab_fish[1] == 1 && game1->box[i][j].tab_fish[2] == 1) {
+                strcpy(a, "🐟 🐟");  // Deux poissons type 1
+            } else if (game1->box[i][j].tab_fish[1] == 2 && game1->box[i][j].tab_fish[2] == 2) {
+                strcpy(a, "🐠 🐠");  // Deux poissons type 2
+            } else if (game1->box[i][j].tab_fish[1] == 3 && game1->box[i][j].tab_fish[2] == 3) {
+                strcpy(a, "🦈 🦈");  // Deux poissons type 3
+            } else if ((game1->box[i][j].tab_fish[1] == 1 && game1->box[i][j].tab_fish[2] == 2) || 
+                       (game1->box[i][j].tab_fish[1] == 2 && game1->box[i][j].tab_fish[2] == 1)) {
+                strcpy(a, "🐟 🐠");  // Un poisson type 1 et un poisson type 2
+            } else if ((game1->box[i][j].tab_fish[1] == 1 && game1->box[i][j].tab_fish[2] == 3) || 
+                       (game1->box[i][j].tab_fish[1] == 3 && game1->box[i][j].tab_fish[2] == 1)) {
+                strcpy(a, "🐟 🦈");  // Un poisson type 1 et un poisson type 3
+            } else {
+                strcpy(a, "🦈 🐠");  // Un poisson type 3 et un poisson type 2
+            }
+            break;
+        default:
+            strcpy(a, ".");  // Cas par défaut
+            break;
+    }
+    return a;  // Retourne la chaîne de caractères représentant les poissons
+}
 void print_grid(Game* game1){  // Procèdure  pour afficher le plateau de jeu
      for(int i=0; i<game1->nb_column; i+=2){ // Boucle pour afficher la ligne supérieure de la grille
                 printf("  ____      "); // Affiche les bords de la grille
@@ -109,10 +153,10 @@ void print_grid(Game* game1){  // Procèdure  pour afficher le plateau de jeu
         printf(" /"); // Affiche le bord gauche de la grille
         while(j<game1->nb_column){ // Boucle pour parcourir chaque colonne de la grille
             if(game1->box[a][j].existence){ // Vérifie si la case existe
-                    printf("    %c", 92); // Affiche une case vide
+                    printf("    \\"); // Affiche une case vide
             }
             else{
-                printf("xxxx%c", 92); // Affiche une case bloquée
+                printf("xxxx\\"); // Affiche une case bloquée
             }
             j++;
             if(j<game1->nb_column &&(a!=0 || j!=(game1->nb_column-1))){ // Vérifie si une ligne est à afficher après la case
@@ -124,10 +168,10 @@ void print_grid(Game* game1){  // Procèdure  pour afficher le plateau de jeu
                         printf("      /"); // Affiche une ligne de cases avec des pingouins
                     }
                     else if(a!=0 && game1->box[a-1][j].nb_fish==3){
-                        printf("🐟 🐟 /"); // Affiche une ligne de cases avec deux poissons
+                        printf("%s /", give_character_fish(a-1, j, 2, game1)); // Affiche deux poissons dans une case
                     }
                     else if(a!=0 && game1->box[a-1][j].nb_fish==2){
-                        printf("  🐟  /"); // Affiche une ligne de cases avec un poisson
+                        printf("  %s  /", give_character_fish(a-1, j, 1, game1)); // Affiche un poisson dans une case
                     }
                     else{
                         printf("      /"); // Affiche une ligne de cases vides
@@ -145,14 +189,14 @@ void print_grid(Game* game1){  // Procèdure  pour afficher le plateau de jeu
                     printf(" %s  %c", give_character_penguin(a, k, game1),92);
                 }
                 else if(game1->box[a][k].nb_fish>0){
-                        printf(" 🐟   %c", 92);  // Affiche un poisson dans une case
+                        printf(" %s   \\", give_character_fish(a, k, 1, game1));  // Affiche un poisson dans une case
                     }
                 else{
-                    printf(" %s  %c", give_character_penguin(a, k, game1),92);
+                    printf(" %s  \\", give_character_penguin(a, k, game1));
                 }
             }
             else{
-                printf("xxxxxx%c"); // Affiche une case bloquée
+                printf("xxxxxx\\"); // Affiche une case bloquée
             }
             k++;
             if(k<=(game1->nb_column-1)){ // Vérifie s'il y a une ligne à afficher après la case
@@ -167,17 +211,17 @@ void print_grid(Game* game1){  // Procèdure  pour afficher le plateau de jeu
         }
         printf("\n"); // Passage à la ligne suivante
         int l=0;
-        printf("%c", 92); // Affiche le bord gauche de la grille
+        printf("\\"); // Affiche le bord gauche de la grille
         while(l<game1->nb_column){ // Boucle pour parcourir chaque colonne de la grille
             if(game1->box[a][l].existence){
                 if(game1->box[a][l].penguin==1){
                     printf("      /");  // Affiche une ligne de cases avec des pingouins
                 }
                 else if(game1->box[a][l].nb_fish==3){
-                    printf("🐟 🐟 /"); // Affiche une ligne de cases avec deux poissons
+                    printf("%s /", give_character_fish(a, l, 2, game1)); // Affiche deux poissons dans une case
                 }
                 else if(game1->box[a][l].nb_fish==2){
-                    printf("   🐟 /"); // Affiche une ligne de cases avec un poisson
+                    printf("   %s /", give_character_fish(a, l, 1, game1)); // Affiche un poisson dans une case
                 }
                 else{
                    printf("      /");  // Affiche une ligne de cases vides
@@ -189,34 +233,34 @@ void print_grid(Game* game1){  // Procèdure  pour afficher le plateau de jeu
             l++;
             if(l<game1->nb_column && (a!=(game1->nb_ligne-1) || l!=(game1->nb_column-1))){ // Vérifie s'il y a une ligne à afficher après la case
                 if(game1->box[a][l].existence){
-                    printf("    %c", 92);  // Affiche une ligne de cases vides ou avec des pingouins
+                    printf("    \\");  // Affiche une ligne de cases vides ou avec des pingouins
                 }
                 else{
-                    printf("xxxx%c", 92); // Affiche une ligne de cases bloquées
+                    printf("xxxx\\"); // Affiche une ligne de cases bloquées
                 }
             }
             l++;
         }
         printf("\n"); // Passage à la ligne suivante
         int m=0; // Initialisation de la variable de boucle pour parcourir les colonnes
-        printf(" %c", 92);  // Affiche le bord gauche de la grille
+        printf(" \\");  // Affiche le bord gauche de la grille
         while(m<game1->nb_column){ // Boucle pour parcourir chaque colonne de la grille
             printf("____/"); // Affiche une colonne de séparateurs verticaux
             m++;  // Passage à la colonne suivante
             if(m<game1->nb_column && (a!=(game1->nb_ligne-1) || m!=(game1->nb_column-1))){ // Vérifie s'il y a une colonne à afficher après la case
                 if(game1->box[a][m].existence){ // Vérifie si la case existe
                     if(a!=(game1->nb_ligne-1) && game1->box[a][m].penguin==1){
-                        printf(" %s  %c", give_character_penguin(a, m, game1), 92);
+                        printf(" %s  \\", give_character_penguin(a, m, game1));
                     }
                     else if(game1->box[a][m].nb_fish>0 && a!=(game1->nb_ligne-1)){
-                        printf("  🐟  %c", 92); // Affiche un poisson dans une case
+                        printf("  %s  \\", give_character_fish(a, m, 1, game1)); // Affiche un poisson dans une case
                     }
                     else{
-                       printf("      %c", 92); // Affiche une case vide ou bloquée
+                       printf("      \\"); // Affiche une case vide ou bloquée
                     }
                 }
                 else{
-                    printf("xxxxxx%c", 92); // Affiche une case bloquée
+                    printf("xxxxxx\\"); // Affiche une case bloquée
                 }
             }
             m++; // Passage à la colonne suivante

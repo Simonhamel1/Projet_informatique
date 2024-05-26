@@ -383,11 +383,11 @@ int max_move(int choice_move, int num_penguin, int num_player, Game* game1){ // 
     return number_move;  // Une fois qu'il n'est plus possible d'effectuer un mouvement supplémentaire, on retourne le nombre maximal de mouvements
 }
 
-void print_score_player(Game* game1){
+void print_score_player(Game* game1){ //Procèdure qui affiche le score de tout les joueurs
     for(int i=0; i<game1->nb_player; i++){
-        printf("score %s : %d, ", game1->player[i].name, game1->player[i].score_player);
+        printf("score %s : %d, ", game1->player[i].name, game1->player[i].score_player);//Affiche le score du joueur i+1
     }
-    printf("\n");
+    printf("\n"); //Effectue un saut de ligne
 }
 int index_max_score_player(Game* game1){ // Fonction qui retourne l'index du joueur avec le score le plus élevé
     int max = game1->player[0].score_player; // Initialise la variable max avec le score du premier joueur
@@ -423,7 +423,7 @@ int choose_direction(int num_penguin, int num_player, Game* game1){ // Fonction 
         }while(verify); // Répète la boucle tant qu'une direction valide n'est pas choisie
         return choice_move; // Retourne la direction choisie
 }
-void choice_number_move(int choice_move, int num_penguin, int num_player, Game* game1, int* nb_rotten){ // Procèdure qui  permet au joueur de choisir le nombre de mouvements à effectuer dans une direction donnée.
+void choice_number_move(int choice_move, int num_penguin, int num_player, Game* game1, int* nb_rotten){ // Procèdure qui  permet au joueur de choisir  et d'effectuer le nombre de mouvements à effectuer dans une direction donnée.
     int choice = 0; // Variable pour stocker le choix du joueur
     int max; // Variable pour stocker le nombre maximum de mouvements possibles
     int number_move;  // Variable pour stocker le nombre de mouvements choisi par le joueur
@@ -498,6 +498,7 @@ void game_total(Game* game1){ // procèdure qui  gère le déroulement du jeu.
     }
     printf("félicitation au grand gagnant %s !", game1->player[index_max_score_player(game1)-1].name); // Une fois que tous les pingouins ne peuvent plus se déplacer, affiche le gagnant
 }
+
 void print_score_player_ordi(Game* game1){ // Procèdure pour afficher les scores du joueur et des ordinateurs
     printf("score %s : %d, ", game1->player[0].name, game1->player[0].score_player); // Affiche le score du joueur humain
     for(int i=1; i<game1->nb_player; i++){ // Boucle pour parcourir chaque joueur ordinateur
@@ -506,7 +507,6 @@ void print_score_player_ordi(Game* game1){ // Procèdure pour afficher les score
     printf("\n");
 
 }
-
 void computer_tour(int num_computer, Game* game1){  // Procèdure qui gère le tour d'un joueur ordinateur
     int alea_num_penguin; // Variable pour stocker le numéro aléatoire du pingouin
     int alea_direction; // Variable pour stocker la direction aléatoire
@@ -516,7 +516,7 @@ void computer_tour(int num_computer, Game* game1){  // Procèdure qui gère le t
     int* nb_rotten = &rotten; // Pointeur vers la variable rotten
     int score = game1->player[num_computer-1].score_player; // Stocke le score actuel du joueur ordinateur
     if(verify_all_penguin_one_player(num_computer, game1)==0){ // Vérifie si tous les pingouins de l'ordinateur sont bloqués
-        printf("tout les pingouins de l'ordinateurs sont bloqués"); // Message indiquant que tous les pingouins sont bloqués
+        printf("tout les pingouins de l'ordinateurs %d sont bloqués",  num_computer-1); // Message indiquant que tous les pingouins sont bloqués
     }
     else{ // Si au moins un pingouin peut se déplacer
         do{
@@ -549,13 +549,12 @@ void all_player_computer_tour(Game* game1){ // Procèdure  qui gère le tour de 
         
     }
 }
-
 void game_total_computer(Game* game1){ // Procèdure qui gère le déroulement complet d'une partie pour les ordinateurs
         while(verify_all_penguin_all_player(game1)==1){ // Boucle tant que tous les pingouins ne sont pas bloqués
         all_player_computer_tour(game1); // Lance un tour complet pour tous les joueurs
         print_score_player_ordi(game1);  // Affiche les scores de tous les joueurs
         if(index_max_score_player(game1)>1){ // Vérifie si un ordinateur est en tête
-            printf("Pour le moment l'ordinateur %d gagne ...\n", index_max_score_player(game1)); // Affiche l'ordinateur en tête
+            printf("Pour le moment l'ordinateur %d gagne ...\n", index_max_score_player(game1)-1); // Affiche l'ordinateur en tête
         }
         else{
             printf("Pour le moment %s gagne ...\n", game1->player[0].name); // Affiche le joueur humain en tête

@@ -226,7 +226,7 @@ void put_coordinate_penguin(Game* game1){ // Procédure pour placer les coordonn
 void print_coordinate_fish1(Game* game1){ // Procédure pour afficher les coordonnées des poissons 
     for(int i=0; i<nb_fish1(game1); i++){ // Parcourir tous les poissons 
         if(game1->tab_fish1[i].x!=-1 && game1->tab_fish1[i].y!= -1){ // Vérifier si les coordonnées du poisson sont valides
-            printf("%d :(%d, %d)", i+1, game1->tab_fish1[i].x, game1->tab_fish1[i].y); // Afficher les coordonnées du poisson
+            printf("%d :(%d, %d) ", i+1, game1->tab_fish1[i].x, game1->tab_fish1[i].y); // Afficher les coordonnées du poisson
         }
     }
 }
@@ -425,6 +425,7 @@ void explication(){ // Procèdure pour afficher les explications du jeu
     printf("Ces poissons se trouvent seulement sur une case où il y a au minimum 2 poissons.\n");
     printf("Il ne faut pas les toucher car ils vaut -1 points.\n");
     printf("La variante 3, chaque poissons vaut entre 1 et 3 points.\n");
+    printf("🐟: 1 point, 🐠: 2 points, 🦈: 3 points\n");
     printf("Vous avez à choisir entre six directions\n\n");  // Explication des directions de mouvement
     printf("        ____\n");
     printf("       /    %c\n",92);
@@ -489,9 +490,9 @@ void parameters(Game* game1){ // Procèdure pour configurer les paramètres du j
 void play_game_players(Game* game1){ // Procèdure pour lancer le jeu avec les joueurs
     create_tab_box(game1); // Crée le tableau de jeu
     verify_generate_fish(game1); // Vérifie et génère les poissons
+    play_variants(game1); // Joue les variantes du jeu
     print_grid(game1); // Affiche la grille de jeu
     put_penguin_on_box(game1); // Place les pingouins sur le plateau
-    play_variants(game1); // Joue les variantes du jeu
     print_grid(game1); // Affiche de nouveau la grille de jeu
     game_total(game1); // Calcule le score total du jeu
 }
@@ -531,6 +532,7 @@ void play_game_computer(Game* game1){ // Procèdure pour jouer le jeu contre l'o
     one_player_name(1, game1); // Demande le prénom du joueur humain
     create_tab_box(game1); // Crée le tableau de jeu
     verify_generate_fish(game1); // Vérifie et génère les poissons
+    play_variants(game1); // Joue les variantes du jeu
     print_grid(game1); // Affiche la grille de jeu
     create_tab_fish1(game1); // Crée le tableau de poissons (spécifique à cette variante)
     create_tab_penguin(game1);  // Crée le tableau de pingouins pour chaque joueur
@@ -541,7 +543,6 @@ void play_game_computer(Game* game1){ // Procèdure pour jouer le jeu contre l'o
             game1->box[game1->player[i].tab_penguin[j].x][game1->player[i].tab_penguin[j].y].penguin = 1; // Place les pingouins sur le plateau
         }
     }
-    play_variants(game1); // Joue les variantes du jeu
     print_grid(game1); // Affiche de nouveau la grille de jeu
     game_total_computer(game1); // Calcule le score total du jeu contre l'ordinateur
 }
