@@ -42,10 +42,10 @@ char* give_num_penguin(int num_player, int i, int j, Game* game1){ // Définitio
                             return "4"; // Retourne "4" pour le deuxième pingouin
                             break;
                         case 4 :
-                            return "5";
+                            return "5"; // Retourne "5" pour le deuxième pingouin
                             break;
                         case 5 :
-                            return "6";
+                            return "6"; // Retourne "6" pour le deuxième pingouin
                             break;
                         default :  // Cas par défaut (si l'indice est supérieur à 3)
                             return "."; // Retourne "." pour indiquer un pingouin non spécifié
@@ -54,11 +54,11 @@ char* give_num_penguin(int num_player, int i, int j, Game* game1){ // Définitio
         }
     }
 }
-char* give_character_penguin(int i, int j, Game* game1){
-    char* a = (char*)malloc(30 * sizeof(char));
-    if (a == NULL) {
-        printf("Erreur d'allocation mémoire\n");
-        exit(1);
+char* give_character_penguin(int i, int j, Game* game1){  // Fonction qui attribue chaine de caractère " pingouin " à un joueur
+    char* a = (char*)malloc(30 * sizeof(char)); // Alloue dynamiquement de la mémoire pour stocker le caractère du pingouin
+    if (a == NULL) { // Vérifie si l'allocation mémoire a échouée
+        printf("Erreur d'allocation mémoire\n"); // Affiche un message d'erreur en cas d'échec de l'allocation
+        exit(1); // Quitte le programme en cas d'échec de l'allocation
     }
 
     int num_player = search_coordinate_in_tab_penguin(i, j, game1); // Recherche du numéro du joueur à cette position
@@ -68,34 +68,34 @@ char* give_character_penguin(int i, int j, Game* game1){
     } 
     else {
         char* color;
-        switch (num_player) {
+        switch (num_player) { 
             case 1: 
-                color = RED; 
+                color = RED;  // Attribue la couleur rouge pour représenter le joueur 1
                 break;
             case 2: 
-                color = YELLOW; 
+                color = YELLOW;  // Attribue la couleur jaune pour représenter le joueur 2
                 break;
             case 3: 
-                color = GREEN; 
+                color = GREEN;  // Attribue la couleur verte pour représenter le joueur 3
                 break;
             case 4: 
-                color = BLUE; 
+                color = BLUE;  // Attribue la couleur bleue pour représenter le joueur 4
                 break;
             case 5: 
-                color = CYAN;
+                color = CYAN; // Attribue la couleur cyan pour représenter le joueur 5
                 break;
             case 6: 
-                color = WHITE; 
+                color = WHITE;  // Attribue la couleur blanche pour représenter le joueur 6
                 break;
-            default:
-                free(a);
-                exit(1);
+            default: // S'exécute si num_player ne correspond à aucun des cas
+                free(a); // Libère la mémoire allouée dynamiquement
+                exit(1); // Quitte le programme si le numéro de joueur est invalide
         }
         
-        strcpy(a, color);
-        strcat(a, "🐧");
-        strcat(a, give_num_penguin(num_player, i, j, game1));
-        strcat(a, RESET);
+        strcpy(a, color); // Copie la couleur du joueur dans la chaîne
+        strcat(a, "🐧"); // Ajoute le caractère pingouin à la chaîne
+        strcat(a, give_num_penguin(num_player, i, j, game1)); // Ajoute le numéro du pingouin à la chaîne
+        strcat(a, RESET);  // Réinitialise la couleur de la chaîne
     }
     return a;  // Retourne la chaîne représentant le pingouin
 }

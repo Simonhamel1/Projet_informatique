@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "player_tour.h": "c"
+        "player_tour.h": "c",
+        "print_grid.h": "c",
+        "stdio.h": "c"
     }
 }

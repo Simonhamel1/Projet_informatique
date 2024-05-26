@@ -191,10 +191,10 @@ int verify_number_move(int number_move, int choice_move, int num_penguin, int nu
     }
     return verify; // Retourne la variable de contrôle pour indiquer la validité des déplacements
 }
-int max_move(int choice_move, int num_penguin, int num_player, Game* game1){
-    int number_move = 1;
-    while(verify_number_move(number_move+1, choice_move, num_penguin, num_player, game1)){
+int max_move(int choice_move, int num_penguin, int num_player, Game* game1){ //  Fonction qui détermine le nombre maximum de mouvements qu'un pingouin peut effectuer dans une direction donnée.
+    int number_move = 1; // Initialisation du nombre de mouvements à 1
+    while(verify_number_move(number_move+1, choice_move, num_penguin, num_player, game1)){ // Tant que le nombre de mouvements suivant est valide, on incrémente le nombre de mouvements
         number_move++;
     }
-    return number_move;
+    return number_move;  // Une fois qu'il n'est plus possible d'effectuer un mouvement supplémentaire, on retourne le nombre maximal de mouvements
 }
