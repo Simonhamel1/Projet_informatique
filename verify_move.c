@@ -3,10 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "verify_move.h"
-#include "player_tour.h"
 #include "move.h"
-#include "verify_move.h"
-#include "print_grid.h"
 #include "structure.h"
 
 int verify_top_left(int i, int j, Game* game1){ // fonction qui  vérifie si un mouvement vers le haut gauche est possible pour une case donnée 
@@ -102,6 +99,7 @@ int verify_choice_direction(int choice_move, int i, int j, Game* game1){ // Fonc
         case 6: // Si la direction choisie est 6 (bas-droite)
             return verify_down_right(i, j, game1); // Vérifie si le mouvement bas-droite est possible
     }
+    return 0 ;
 }
 int verify_choice_penguin(int num_penguin, int num_player, Game* game1){  // Fonction qui vérifie si un pingouin d'un joueur donné peut effectuer un mouvement valide
     int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x; // Récupère les coordonnées actuelles du pingouin

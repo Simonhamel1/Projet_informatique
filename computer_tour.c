@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
 #include "verify_move.h"
 #include "player_tour.h"
 #include "move.h"
@@ -27,7 +28,7 @@ void computer_tour(int num_computer, Game* game1){  // Procèdure qui gère le t
     int* nb_rotten = &rotten; // Pointeur vers la variable rotten
     int score = game1->player[num_computer-1].score_player; // Stocke le score actuel du joueur ordinateur
     if(verify_all_penguin_one_player(num_computer, game1)==0){ // Vérifie si tous les pingouins de l'ordinateur sont bloqués
-        printf("tout les pingouins de l'ordinateurs sont bloqués"); // Message indiquant que tous les pingouins sont bloqués
+        printf("tout les pingouins de l'ordinateurs %d sont bloqués",  num_computer-1); // Message indiquant que tous les pingouins sont bloqués
     }
     else{ // Si au moins un pingouin peut se déplacer
         do{
@@ -51,11 +52,11 @@ void computer_tour(int num_computer, Game* game1){  // Procèdure qui gère le t
 }
 void all_player_computer_tour(Game* game1){ // Procèdure  qui gère le tour de tous les joueurs (ordinateur et humain)
     one_player_tour(1, game1); // Lance le tour du joueur humain (numéro 1)
-    sleep(2);  // Pause de 2 secondes pour rendre le jeu plus fluide
+    sleep(1);  // Pause de 1 secondes pour rendre le jeu plus fluide
     int num_computer = 2;  // Initialisation du numéro du premier joueur ordinateur
     while(num_computer!=(game1->nb_player+1)){ // Boucle sur tous les joueurs ordinateurs
         computer_tour(num_computer, game1);  // Lance le tour du joueur ordinateur courant
-        sleep(2); // Pause de 2 secondes entre chaque tour d'ordinateur
+        sleep(1); // Pause de 1 secondes entre chaque tour d'ordinateur
         num_computer++; // Passe au joueur ordinateur suivant
         
     }
@@ -65,7 +66,7 @@ void game_total_computer(Game* game1){ // Procèdure qui gère le déroulement c
         all_player_computer_tour(game1); // Lance un tour complet pour tous les joueurs
         print_score_player_ordi(game1);  // Affiche les scores de tous les joueurs
         if(index_max_score_player(game1)>1){ // Vérifie si un ordinateur est en tête
-            printf("Pour le moment l'ordinateur %d gagne ...\n", index_max_score_player(game1)); // Affiche l'ordinateur en tête
+            printf("Pour le moment l'ordinateur %d gagne ...\n", index_max_score_player(game1)-1); // Affiche l'ordinateur en tête
         }
         else{
             printf("Pour le moment %s gagne ...\n", game1->player[0].name); // Affiche le joueur humain en tête

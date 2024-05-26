@@ -54,6 +54,7 @@ char* give_num_penguin(int num_player, int i, int j, Game* game1){ // Définitio
                 }
         }
     }
+    return 0;
 }
 char* give_character_penguin(int i, int j, Game* game1){  // Fonction qui attribue une chaine de caractère " pingouin " à un joueur
     char* a = (char*)malloc(30 * sizeof(char)); // Alloue dynamiquement de la mémoire pour stocker le caractère du pingouin
@@ -100,7 +101,6 @@ char* give_character_penguin(int i, int j, Game* game1){  // Fonction qui attrib
     }
     return a;  // Retourne la chaîne représentant le pingouin
 }
-
 char* give_character_fish(int i, int j, int nb_fish, Game* game1) {// Fonction qui renvoie un caractère représentant les poissons dans une case donnée
     // Allocation dynamique de mémoire pour stocker la chaîne de caractères représentant les poissons
     char* a = (char*)malloc(30 * sizeof(char));

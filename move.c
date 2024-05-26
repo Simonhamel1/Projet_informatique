@@ -2,18 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "verify_move.h"
-#include "player_tour.h"
-#include "move.h"
-#include "verify_move.h"
-#include "print_grid.h"
 #include "structure.h"
 
-void print_coordinate_one_penguin(int num_player, Game* game1){  // procèdure qui permet d'afficher les coordonnées des pingouins d'un joueur 
-    for(int i=0; i<game1->player[num_player-1].nb_penguin; i++){    // Boucle pour parcourir tous les pingouins du joueur spécifié
-        printf("%d :(%d, %d)", i+1, game1->player[num_player-1].tab_penguin[i].x, game1->player[num_player-1].tab_penguin[i].y); // Affichage de l'index du pingouin et de ses coordonnées (x, y)
-    }
-}
 void move_top_right(int num_penguin, int num_player, Game* game1, int* nb_rotten){ // Procèdure qui  déplace un pingouin vers la diagonale haut-droite dans la grille de jeu.
     int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x; // Récupération des coordonnées actuelles du pingouin
     int j = game1->player[num_player-1].tab_penguin[num_penguin-1].y;
