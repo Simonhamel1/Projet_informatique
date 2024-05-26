@@ -26,7 +26,7 @@ void launch_all_game(Game* game1){ // Procèdure pour lancer  le jeu au complet
 
 int main() { // Fonction principale
     srand(time(NULL)); // Initialisation  pour générer  les nombres aléatoires
-    system("chcp 65001");
+    system("chcp 65001"); //Pour inclure les émojis
     Game game1; // Créer la structure  du jeu
     Game* pointer_game1 = &game1; // Pointeur vers cette structure
     launch_all_game(pointer_game1);  // Lancer le jeu

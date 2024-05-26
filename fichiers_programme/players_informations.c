@@ -90,28 +90,28 @@ void create_dimension(Game* game1){ // Procédure pour créer les dimensions du 
 
     switch (game1->nb_player){ // Sélection des dimensions du plateau en fonction du nombre de joueurs
         case 2 : // Si deux joueurs sont sélectionnés
-            game1->nb_ligne =10; // Définir le nombre de lignes à 10
-            game1->nb_column = 10; // Définir le nombre de colonnes à 10
-            number_penguin = 2; // Définir le nombre de pingouins par joueur à 2
+            game1->nb_ligne =15; // Définir le nombre de lignes à 10
+            game1->nb_column = 15; // Définir le nombre de colonnes à 10
+            number_penguin = 4; // Définir le nombre de pingouins par joueur à 2
             break;
         case 3 : // Si trois joueurs sont sélectionnés
-            game1->nb_ligne = 13; // Définir le nombre de lignes à 13
-            game1->nb_column = 13; // Définir le nombre de colonnes à 13
+            game1->nb_ligne = 16; // Définir le nombre de lignes à 13
+            game1->nb_column = 16; // Définir le nombre de colonnes à 13
             number_penguin = 3; // Définir le nombre de pingouins par joueur à 3
             break;
         case 4 : // Si quatre joueurs sont sélectionnés
-            game1->nb_ligne = 12; // Définir le nombre de lignes à 12
-            game1->nb_column = 12; // Définir le nombre de colonnes à 12
+            game1->nb_ligne = 15; // Définir le nombre de lignes à 12
+            game1->nb_column = 15; // Définir le nombre de colonnes à 12
             number_penguin = 2; // Définir le nombre de pingouins par joueur à 2
             break;
         case 5 : // Si cinq joueurs sont sélectionnés
-            game1->nb_ligne = 15; // Définir le nombre de lignes à 15
-            game1->nb_column = 15; // Définir le nombre de colonnes à 15
+            game1->nb_ligne = 18; // Définir le nombre de lignes à 15
+            game1->nb_column = 18; // Définir le nombre de colonnes à 15
             number_penguin = 2; // Définir le nombre de pingouins par joueur à 2
             break;
         case 6 : // Si six joueurs sont sélectionnés
-            game1->nb_ligne = 9; // Définir le nombre de lignes à 9
-            game1->nb_column = 9; // Définir le nombre de colonnes à 9
+            game1->nb_ligne = 13; // Définir le nombre de lignes à 9
+            game1->nb_column = 13; // Définir le nombre de colonnes à 9
             number_penguin = 1; // Définir le nombre de pingouins par joueur à 1
             break;
         default: // Si le nombre de joueurs est incorrect
