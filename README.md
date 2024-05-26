@@ -37,12 +37,28 @@ Cy-Fish est un jeu multijoueur tour par tour dans lequel vous allez pouvoir affr
 
 Une fois le programme executé vous aurais la possibilité de choisir différentes choses :
 
--Choisir si vous voulez jouer contre des joueurs ou contre un ordinateur.
--Si le mode Contre les ordinateurs est choisi, vous allez devoir rentrer le nombre d'ordinateur que vous souhaiter(de 1 à 5), rentrer votre prénom, choisir la variante parmi 3 disponible,  puis jouer.
+-Tout d'abord, choisir si vous voulez jouer contre des joueurs ou contre des ordinateur :
 
--Si le mode contre des  joueurs est choisi, vous allez devoir rentrer le nombre de joueur (entre 1 et 6), puis rentrer le prénom des différents joueur. Ensuite vous avez le choix entre jouer avec les paramètres par défaut, aller dans les paramétres et voir les explications du jeu. Les paramètres permettent de changer les dimensions de la grille et le nombre de penguin par joueur. Les explications explique le but du jeu et comment on y joue. Enfin quand vous choissisez jouer, le jeu se lance, on vous demande alors si vous voulez choisir les coordonnées de vos pingouins, puis ensuite quelle variantes vous voulez parmi les 3 disponible.
+-Si le mode Contre les ordinateurs est choisi, vous allez devoir :
+            -Rentrer le nombre d'ordinateur que vous souhaiter (de 1 à 5)
+            -Rentrer votre prénom
+            -choisir la variante parmi 3 disponible
+            -puis ensuite jouer
 
-Le jeu peut commencer, chaque joueur choisi à son tour une direction possible puis choisi ensuite si il veut choisir son nombre de déplacements ou faire le maximum de déplacement dans cette direction. Il ramasse ensuite un nombre de points en fonction du nombre de poissons sur les cases où il est passé et de la  variante choisi. Le jeu se termine quand tout les pingouins sont bloqués et le joueur ayant le plus de points gagne.
+-Si le mode contre des  joueurs est choisi, vous allez devoir :
+            -Rentrer le nombre de joueur (entre 1 et 6), 
+            -Puis rentrer le prénom des différents joueur. 
+Ensuite vous avez le choix entre jouer avec les paramètres par défaut, aller dans les paramétres et voir les explications du jeu. 
+Les paramètres permettent de changer  :
+            -les dimensions de la grille : le nombre de colonnes et de lignes (minimum de 9)
+            -Le nombre de pingouin par joueur (entre 1 et 6)
+Les explications explique le but du jeu et comment on y joue. 
+Enfin quand vous choissisez jouer, le jeu se lance, on vous demande :
+            -Si vous voulez choisir les coordonnées de vos pingouins (oui ou non), dans le cas de oui chaque joueur                rentre à tour de rôle les coordonnées de son premier pingouin, puis du deuxiéme...
+             -Quelle variantes vous voulez parmi les 3 disponible
+
+Le jeu peut commencer, chaque joueur choisi à son tour une direction possible puis choisi ensuite si il veut choisir son nombre de déplacements ou faire le maximum de déplacement dans cette direction. Il ramasse ensuite un nombre de points en fonction du nombre de poissons sur les cases où il est passé et de la  variante choisi. 
+Le jeu se termine quand tout les pingouins sont bloqués et le joueur ayant le plus de points gagne.
 
 
 
