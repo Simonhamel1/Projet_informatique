@@ -13,21 +13,26 @@ void print_coordinate_one_penguin(int num_player, Game* game1){  // procèdure q
         printf("%d :(%d, %d)", i+1, game1->player[num_player-1].tab_penguin[i].x, game1->player[num_player-1].tab_penguin[i].y); // Affichage de l'index du pingouin et de ses coordonnées (x, y)
     }
 }
-void move_top_right(int num_penguin, int num_player, Game* game1, int* nb_rotten){
-    int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x;
+void move_top_right(int num_penguin, int num_player, Game* game1, int* nb_rotten){ // Procèdure qui  déplace un pingouin vers la diagonale haut-droite dans la grille de jeu.
+    int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x; // Récupération des coordonnées actuelles du pingouin
     int j = game1->player[num_player-1].tab_penguin[num_penguin-1].y;
-    if(j%2==0){
+    // Vérifie si la colonne est paire ou impaire pour ajuster le mouvement
+    if(j%2==0){  // si  Colonne paire
+    // Met à jour l'état de la case actuelle du pingouin et déplace le pingouin
         game1->box[i][j].existence = 0;
         game1->box[i][j].penguin = 0;
-        i--;
-        j++;
+        i--; // Déplacement vers le haut
+        j++; // Déplacement vers la droite
+        // Met à jour l'état de la nouvelle case et ajoute le score des poissons à celui du joueur
         game1->box[i][j].penguin = 1;
         game1->player[num_player-1].score_player += game1->box[i][j].score_box;
     }
-    else{
+    else{ // Sinon Colonne impaire
+    // Met à jour l'état de la case actuelle du pingouin et déplace le pingouin
         game1->box[i][j].existence = 0;
         game1->box[i][j].penguin = 0;
-        j++;
+        j++; // Déplacement vers la droite
+        // Ajoute le score des poissons à celui du joueur et met à jour l'état de la nouvelle case
         game1->player[num_player-1].score_player += game1->box[i][j].score_box;
         game1->box[i][j].penguin = 1;
 
@@ -39,51 +44,58 @@ void move_top_right(int num_penguin, int num_player, Game* game1, int* nb_rotten
         }
 
 }
-void move_top(int num_penguin, int num_player, Game* game1, int* nb_rotten){
-    int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x;
+void move_top(int num_penguin, int num_player, Game* game1, int* nb_rotten){ // Procèdure qui déplace un pingouin vers le haut dans la grille de jeu.
+    int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x; // Récupération des coordonnées actuelles du pingouin
     int j = game1->player[num_player-1].tab_penguin[num_penguin-1].y;
-    game1->box[i][j].existence = 0;
-    i--;
+    game1->box[i][j].existence = 0; // Met à jour l'état de la case actuelle du pingouin
+    i--; // Déplacement vers le haut
+    // Met à jour l'état de la nouvelle case et ajoute le score des poissons à celui du joueur
     game1->box[i][j].penguin = 1;
     game1->player[num_player-1].score_player += game1->box[i][j].score_box;
+    // Met à jour les coordonnées du pingouin dans le tableau des pingouins du joueur
     game1->player[num_player-1].tab_penguin[num_penguin-1].x = i;
     game1->player[num_player-1].tab_penguin[num_penguin-1].y = j;
-    if(game1->box[i][j].bad_fish){
+    if(game1->box[i][j].bad_fish){ // Vérifie s'il y a un poisson pourri dans la nouvelle case et met à jour le compteur de poissons pourris
             *nb_rotten = *nb_rotten + 1;
         }
 }
-void move_top_left(int num_penguin, int num_player, Game* game1, int* nb_rotten){
-    int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x;
+void move_top_left(int num_penguin, int num_player, Game* game1, int* nb_rotten){ // Procèdure qui déplace un pingouin vers le haut à gauche dans la grille de jeu.
+    int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x; // Récupération des coordonnées actuelles du pingouin
     int j = game1->player[num_player-1].tab_penguin[num_penguin-1].y;
     if(j%2==0){ // Vérifie si la colonne actuelle est paire
         game1->box[i][j].existence = 0; //  Met à jour l'existence de la case actuelle à 0
         game1->box[i][j].penguin = 0; // Met à jour la case actuelle à 0 pour indiquer qu'elle ne contient plus de pingouin
         i--; // Déplace le pingouin vers la case en haut à gauche
         j--;
+        // Met à jour l'état de la nouvelle case et ajoute le score des poissons à celui du joueur
         game1->box[i][j].penguin = 1;
         game1->player[num_player-1].score_player += game1->box[i][j].score_box;
     }
     else{
+        // Met à jour l'existence de la case actuelle à 0 pour indiquer qu'elle ne contient plus de pingouin
         game1->box[i][j].existence = 0;
         game1->box[i][j].penguin = 0;
-        j--;
-        game1->player[num_player-1].score_player += game1->box[i][j].score_box;
-        game1->box[i][j].penguin = 1;
+        j--; // Déplace le pingouin vers la case en haut à gauche
+        game1->player[num_player-1].score_player += game1->box[i][j].score_box; // Ajoute le score des poissons à celui du joueur
+        game1->box[i][j].penguin = 1; // Met à jour l'état de la nouvelle case
 
     }
-    if(game1->box[i][j].bad_fish){
+    if(game1->box[i][j].bad_fish){ // Vérifie s'il y a un poisson pourri dans la nouvelle case et met à jour le compteur de poissons pourris
             *nb_rotten = *nb_rotten + 1;
         }
-    game1->player[num_player-1].tab_penguin[num_penguin-1].x = i;
+    game1->player[num_player-1].tab_penguin[num_penguin-1].x = i; // Met à jour les coordonnées du pingouin dans le tableau des pingouins du joueur
     game1->player[num_player-1].tab_penguin[num_penguin-1].y = j;
 }
-void move_down_right(int num_penguin, int num_player, Game* game1, int* nb_rotten){
-    int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x;
+void move_down_right(int num_penguin, int num_player, Game* game1, int* nb_rotten){ // Procèdure qui  déplace un pingouin vers le bas à droite dans la grille de jeu.
+    int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x; // Récupération des coordonnées actuelles du pingouin
     int j = game1->player[num_player-1].tab_penguin[num_penguin-1].y;
-    if(j%2==0){
+    // Vérifie si la colonne actuelle est paire
+    if(j%2==0){ // Si elle est paire 
+    // Met à jour l'existence de la case actuelle à 0 pour indiquer qu'elle ne contient plus de pingouin
         game1->box[i][j].existence = 0;
         game1->box[i][j].penguin = 0;
-        j++;
+        j++; // Déplace le pingouin vers la case en bas à droite
+        // Met à jour l'état de la nouvelle case et ajoute le score des poissons à celui du joueur
         game1->box[i][j].penguin = 1;
         game1->player[num_player-1].score_player += game1->box[i][j].score_box;
     }
@@ -92,37 +104,46 @@ void move_down_right(int num_penguin, int num_player, Game* game1, int* nb_rotte
         game1->box[i][j].penguin = 0; // Met à jour la case actuelle à 0 pour indiquer qu'elle ne contient plus de pingouin
         j++; // Déplace le pingouin vers la case en bas à droite
         i++;
-        game1->player[num_player-1].score_player += game1->box[i][j].score_box;
-        game1->box[i][j].penguin = 1;
+        game1->player[num_player-1].score_player += game1->box[i][j].score_box;  // Ajoute le score des poissons à celui du joueur
+        game1->box[i][j].penguin = 1; // Met à jour l'état de la nouvelle case
 
     }
-    if(game1->box[i][j].bad_fish){
+    if(game1->box[i][j].bad_fish){ // Vérifie s'il y a un poisson pourri dans la nouvelle case et met à jour le compteur de poissons pourris
             *nb_rotten = *nb_rotten + 1;
         }
-    game1->player[num_player-1].tab_penguin[num_penguin-1].x = i;
+        // Met à jour les coordonnées du pingouin dans le tableau des pingouins du joueur
+    game1->player[num_player-1].tab_penguin[num_penguin-1].x = i; 
     game1->player[num_player-1].tab_penguin[num_penguin-1].y = j;
 }
-void move_down(int num_penguin, int num_player, Game* game1, int* nb_rotten){
+void move_down(int num_penguin, int num_player, Game* game1, int* nb_rotten){ // Procèdure qui  déplace un pingouin vers le bas dans la grille de jeu.
+    // Récupération des coordonnées actuelles du pingouin
     int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x;
     int j = game1->player[num_player-1].tab_penguin[num_penguin-1].y;
+    // Met à jour l'existence de la case actuelle à 0 pour indiquer qu'elle ne contient plus de pingouin
     game1->box[i][j].existence = 0;
     game1->box[i][j].penguin = 0;
-    i++;
+    i++; // Déplace le pingouin vers la case en bas
+    // Met à jour l'état de la nouvelle case et ajoute le score des poissons à celui du joueur
     game1->box[i][j].penguin = 1;
     game1->player[num_player-1].score_player += game1->box[i][j].score_box;
+     // Met à jour les coordonnées du pingouin dans le tableau des pingouins du joueur
     game1->player[num_player-1].tab_penguin[num_penguin-1].x = i;
     game1->player[num_player-1].tab_penguin[num_penguin-1].y = j;
-    if(game1->box[i][j].bad_fish){
+    if(game1->box[i][j].bad_fish){ // Vérifie s'il y a un poisson pourri dans la nouvelle case et met à jour le compteur de poissons pourris
             *nb_rotten = *nb_rotten + 1;
         }
 }
-void move_down_left(int num_penguin, int num_player, Game* game1, int* nb_rotten){
+void move_down_left(int num_penguin, int num_player, Game* game1, int* nb_rotten){ //Procèdure qui  déplace un pingouin vers le bas à gauche dans la grille de jeu.
+    // Récupération des coordonnées actuelles du pingouin
     int i = game1->player[num_player-1].tab_penguin[num_penguin-1].x;
     int j = game1->player[num_player-1].tab_penguin[num_penguin-1].y;
-    if(j%2==0){
+    // Vérifie si la colonne actuelle est paire
+    if(j%2==0){ // Si elle est paire 
+        // Met à jour l'existence de la case actuelle à 0 pour indiquer qu'elle ne contient plus de pingouin
         game1->box[i][j].existence = 0;
         game1->box[i][j].penguin = 0;
-        j--;
+        j--; // Déplace le pingouin vers la case en bas à gauche
+         // Met à jour l'état de la nouvelle case et ajoute le score des poissons à celui du joueur
         game1->box[i][j].penguin = 1;
         game1->player[num_player-1].score_player += game1->box[i][j].score_box;
     }
@@ -131,42 +152,43 @@ void move_down_left(int num_penguin, int num_player, Game* game1, int* nb_rotten
         game1->box[i][j].penguin = 0; // Met à jour la case actuelle à 0 pour indiquer qu'elle ne contient plus de pingouin
         j--; // Déplace le pingouin vers la case  en bas à gauche
         i++;
-        game1->player[num_player-1].score_player += game1->box[i][j].score_box;
+        game1->player[num_player-1].score_player += game1->box[i][j].score_box; // Ajoute le score des poissons à celui du joueur
         game1->box[i][j].penguin = 1;
     }
-    if(game1->box[i][j].bad_fish){
+    if(game1->box[i][j].bad_fish){ // Vérifie s'il y a un poisson pourri dans la nouvelle case et met à jour le compteur de poissons pourris
             *nb_rotten = *nb_rotten + 1;
         }
-    game1->player[num_player-1].tab_penguin[num_penguin-1].x = i;
+    // Met à jour les coordonnées du pingouin dans le tableau des pingouins du joueur
+    game1->player[num_player-1].tab_penguin[num_penguin-1].x = i; 
     game1->player[num_player-1].tab_penguin[num_penguin-1].y = j;
 }
-void one_move(int choice_move, int num_penguin, int num_player, Game* game1, int* nb_rotten){
+void one_move(int choice_move, int num_penguin, int num_player, Game* game1, int* nb_rotten){ // Procèdure qui  effectue un seul mouvement dans une direction spécifiée par le joueur.
     switch (choice_move)
     {
-    case 1 :
+    case 1 : // Déplacement vers le haut à gauche 
         move_top_left(num_penguin, num_player, game1, nb_rotten);
         break;
-    case 2 :
+    case 2 : // Déplacement vers le haut
         move_top(num_penguin, num_player, game1, nb_rotten);
         break;
-    case 3 :
+    case 3 : // Déplacement vers le haut à droite
         move_top_right(num_penguin, num_player, game1, nb_rotten);
         break;
-    case 4 :
+    case 4 : // Déplacement vers le bas à gauche
         move_down_left(num_penguin, num_player, game1, nb_rotten);
         break;
-    case 5 :
+    case 5 : // Déplacement vers le bas
         move_down(num_penguin, num_player, game1, nb_rotten);
         break;
-    case 6 :
+    case 6 : // Déplacement vers le bas à droite
         move_down_right(num_penguin, num_player, game1, nb_rotten);
         break;
     
     }
 }
-void move_total(int number_move, int num_penguin, int choice_move, int num_player, Game* game1, int * nb_rotten){
+void move_total(int number_move, int num_penguin, int choice_move, int num_player, Game* game1, int * nb_rotten){ // Procèduire qui  effectue un nombre spécifié de mouvements dans une direction donnée.
     for(int i=0; i<number_move; i++){
-        one_move(choice_move, num_penguin, num_player, game1, nb_rotten);
+        one_move(choice_move, num_penguin, num_player, game1, nb_rotten); // Effectue un mouvement à chaque itération
     }
 }
 
@@ -352,13 +374,13 @@ int verify_number_move(int number_move, int choice_move, int num_penguin, int nu
     }
     return verify; // Retourne la variable de contrôle pour indiquer la validité des déplacements
 }
-int max_move(int choice_move, int num_penguin, int num_player, Game* game1){
 
-    int number_move = 1;
-    while(verify_number_move(number_move+1, choice_move, num_penguin, num_player, game1)){
+int max_move(int choice_move, int num_penguin, int num_player, Game* game1){ //  Fonction qui détermine le nombre maximum de mouvements qu'un pingouin peut effectuer dans une direction donnée.
+    int number_move = 1; // Initialisation du nombre de mouvements à 1
+    while(verify_number_move(number_move+1, choice_move, num_penguin, num_player, game1)){ // Tant que le nombre de mouvements suivant est valide, on incrémente le nombre de mouvements
         number_move++;
     }
-    return number_move;
+    return number_move;  // Une fois qu'il n'est plus possible d'effectuer un mouvement supplémentaire, on retourne le nombre maximal de mouvements
 }
 
 void print_score_player(Game* game1){
@@ -401,40 +423,40 @@ int choose_direction(int num_penguin, int num_player, Game* game1){ // Fonction 
         }while(verify); // Répète la boucle tant qu'une direction valide n'est pas choisie
         return choice_move; // Retourne la direction choisie
 }
-void choice_number_move(int choice_move, int num_penguin, int num_player, Game* game1, int* nb_rotten){
-    int choice = 0;
-    int max;
-    int number_move;
-    do{
+void choice_number_move(int choice_move, int num_penguin, int num_player, Game* game1, int* nb_rotten){ // Procèdure qui  permet au joueur de choisir le nombre de mouvements à effectuer dans une direction donnée.
+    int choice = 0; // Variable pour stocker le choix du joueur
+    int max; // Variable pour stocker le nombre maximum de mouvements possibles
+    int number_move;  // Variable pour stocker le nombre de mouvements choisi par le joueur
+    do{  // Boucle pour demander au joueur s'il veut choisir son nombre de mouvements ou utiliser le nombre maximum possible
         printf("veux tu choisir ton nombre de déplacement : 1 ou faire le nombre maximum : 2\n");
-        scanf("%d", &choice);
-    }while(choice!=1 && choice!=2);
-    if(choice == 1){
-        do{
+        scanf("%d", &choice); // lit le choix
+    }while(choice!=1 && choice!=2); // Continue à demander tant que le choix n'est ni 1 ni 2
+    if(choice == 1){ // Si le joueur choisit de spécifier son nombre de mouvements
+        do{  // Boucle pour demander au joueur de choisir un nombre de mouvements valide
             printf("choisi un nombre de deplacement valide");
             scanf("%d", &number_move);
-        }while(verify_number_move(number_move, choice_move, num_penguin, num_player,  game1)==0);
-        move_total(number_move, num_penguin, choice_move, num_player, game1, nb_rotten);
+        }while(verify_number_move(number_move, choice_move, num_penguin, num_player,  game1)==0);  // Continue à demander tant que le nombre de mouvements choisi n'est pas valide
+        move_total(number_move, num_penguin, choice_move, num_player, game1, nb_rotten);  // Effectue le nombre de mouvements spécifié par le joueur
     }
-    else if(choice == 2){
-        max = max_move(choice_move, num_penguin, num_player, game1);
-        move_total(max, num_penguin, choice_move, num_player, game1, nb_rotten);
+    else if(choice == 2){ // Si le joueur choisit d'utiliser le nombre maximum de mouvements possible
+        max = max_move(choice_move, num_penguin, num_player, game1);  // Calcul du nombre maximum de mouvements possibles
+        move_total(max, num_penguin, choice_move, num_player, game1, nb_rotten); // Effectue le nombre maximum de mouvements possible
     }
 }
-void one_player_tour(int num_player, Game* game1){
-    int rotten=0;
-    int * nb_rotten = &rotten;
-    int num_penguin;
-    int choice_move;
-    int number_move;
-    int verify = 1;
-    int score = game1->player[num_player-1].score_player;
-    if(verify_all_penguin_one_player(num_player, game1)==0){
+void one_player_tour(int num_player, Game* game1){ // Proèdure qui  gère le tour d'un joueur 
+    int rotten=0; // Initialise le compteur de poissons pourris mangés à 0
+    int * nb_rotten = &rotten; // Pointeur vers le compteur de poissons pourris
+    int num_penguin; // Numéro du pingouin choisi par le joueur
+    int choice_move; // Direction de déplacement choisie par le joueur
+    int number_move; 
+    int verify = 1; // Variable de vérification pour la boucle do-while
+    int score = game1->player[num_player-1].score_player; // Score du joueur avant le tour
+    if(verify_all_penguin_one_player(num_player, game1)==0){ // Vérifie si tous les pingouins du joueur sont bloqués
         printf("tout tes pingouins sont bloques %s, passage au joueur suivant\n", game1->player[num_player-1].name);
     }
     else{
         do{
-        printf("quelle pingouin souhaite tu déplacer %s,  ", game1->player[num_player-1].name);
+        printf("quelle pingouin souhaite tu déplacer %s,  ", game1->player[num_player-1].name);// Affiche les coordonnées des pingouins du joueur 
         print_coordinate_one_penguin(num_player, game1);
         printf(" :\n");
         scanf("%d", &num_penguin); // Lit le numéro du pingouin choisi
@@ -450,13 +472,13 @@ void one_player_tour(int num_player, Game* game1){
             }
         }
         }while(verify);
-        choice_move = choose_direction(num_penguin, num_player, game1);
-        choice_number_move(choice_move, num_penguin, num_player, game1, nb_rotten);
-        print_grid(game1);
+        choice_move = choose_direction(num_penguin, num_player, game1); // Choix de la direction de déplacement
+        choice_number_move(choice_move, num_penguin, num_player, game1, nb_rotten); // Déplacement du pingouin
+        print_grid(game1);  // Affichage de la grille mise à jour
         if(rotten>0){
-            printf("tu as mangé %d poissons rotten \n", rotten);
+            printf("tu as mangé %d poissons rotten \n", rotten); // Affiche le nombre de poissons pourris mangés
         }
-        printf("tu as gagné %d points ! \n", game1->player[num_player-1].score_player - score);
+        printf("tu as gagné %d points ! \n", game1->player[num_player-1].score_player - score); // Affiche le nombre de points gagnés
     }
 
 }
@@ -468,80 +490,82 @@ void all_player_tour(Game* game1){ // Procédure qui gère les tours de tous les
         
     }
 }
-void game_total(Game* game1){
-    while(verify_all_penguin_all_player(game1)==1){
-        all_player_tour(game1);
-        print_score_player(game1);
-        printf("Pour le moment %s gagne ...\n", game1->player[index_max_score_player(game1)-1].name);
+void game_total(Game* game1){ // procèdure qui  gère le déroulement du jeu.
+    while(verify_all_penguin_all_player(game1)==1){ // Tant que tous les pingouins de tous les joueurs peuvent encore se déplacer
+        all_player_tour(game1); // Appelle la fonction pour le tour de chaque joueur
+        print_score_player(game1); // Affiche le score de chaque joueur
+        printf("Pour le moment %s gagne ...\n", game1->player[index_max_score_player(game1)-1].name); // Affiche le nom du joueur en tête
     }
-    printf("félicitation au grand gagnant %s !", game1->player[index_max_score_player(game1)-1].name);
+    printf("félicitation au grand gagnant %s !", game1->player[index_max_score_player(game1)-1].name); // Une fois que tous les pingouins ne peuvent plus se déplacer, affiche le gagnant
 }
-
-void print_score_player_ordi(Game* game1){
-    printf("score %s : %d, ", game1->player[0].name, game1->player[0].score_player);
-    for(int i=1; i<game1->nb_player; i++){
-        printf("score ordi %d : %d, ", i, game1->player[i].score_player);
+void print_score_player_ordi(Game* game1){ // Procèdure pour afficher les scores du joueur et des ordinateurs
+    printf("score %s : %d, ", game1->player[0].name, game1->player[0].score_player); // Affiche le score du joueur humain
+    for(int i=1; i<game1->nb_player; i++){ // Boucle pour parcourir chaque joueur ordinateur
+        printf("score ordi %d : %d, ", i, game1->player[i].score_player); // Affiche le score de chaque joueur ordinateur avec leur indice
     }
     printf("\n");
 
 }
-void computer_tour(int num_computer, Game* game1){
-    int alea_num_penguin;
-    int alea_direction;
-    int alea_number_move;
-    int i,j;
-    int rotten = 0;
-    int* nb_rotten = &rotten;
-    int score = game1->player[num_computer-1].score_player;
-    if(verify_all_penguin_one_player(num_computer, game1)==0){
-        printf("tout les pingouins de l'ordinateurs sont bloqués");
+
+void computer_tour(int num_computer, Game* game1){  // Procèdure qui gère le tour d'un joueur ordinateur
+    int alea_num_penguin; // Variable pour stocker le numéro aléatoire du pingouin
+    int alea_direction; // Variable pour stocker la direction aléatoire
+    int alea_number_move; // Variable pour stocker le nombre de déplacements aléatoires
+    int i,j; // Variables pour stocker les coordonnées du pingouin sélectionné
+    int rotten = 0; // Variable pour compter le nombre de poissons pourris mangés
+    int* nb_rotten = &rotten; // Pointeur vers la variable rotten
+    int score = game1->player[num_computer-1].score_player; // Stocke le score actuel du joueur ordinateur
+    if(verify_all_penguin_one_player(num_computer, game1)==0){ // Vérifie si tous les pingouins de l'ordinateur sont bloqués
+        printf("tout les pingouins de l'ordinateurs sont bloqués"); // Message indiquant que tous les pingouins sont bloqués
     }
-    else{
+    else{ // Si au moins un pingouin peut se déplacer
         do{
-        alea_num_penguin = rand()%game1->player[num_computer-1].nb_penguin + 1;
-        }while(verify_choice_penguin(alea_num_penguin, num_computer, game1)==0);
-        i = game1->player[num_computer-1].tab_penguin[alea_num_penguin-1].x;
-        j = game1->player[num_computer-1].tab_penguin[alea_num_penguin-1].y;
+        alea_num_penguin = rand()%game1->player[num_computer-1].nb_penguin + 1;  // Sélectionne un pingouin aléatoire
+        }while(verify_choice_penguin(alea_num_penguin, num_computer, game1)==0); // Vérifie si le pingouin sélectionné peut se déplacer
+        i = game1->player[num_computer-1].tab_penguin[alea_num_penguin-1].x; // Récupère la coordonnée x du pingouin sélectionné
+        j = game1->player[num_computer-1].tab_penguin[alea_num_penguin-1].y; // Récupère la coordonnée y du pingouin sélectionné
         do{
-            alea_direction = rand()%6 +1;
-        }while(verify_choice_direction(alea_direction, i, j, game1)==0);
+            alea_direction = rand()%6 +1; // Sélectionne une direction aléatoire (1 à 6)
+        }while(verify_choice_direction(alea_direction, i, j, game1)==0); // Vérifie si la direction sélectionnée est valide
         do{
-            alea_number_move = rand()%10 + 1;
-        }while(verify_number_move(alea_number_move, alea_direction,alea_num_penguin, num_computer, game1)==0);
-        move_total(alea_number_move, alea_num_penguin, alea_direction, num_computer, game1, nb_rotten);
-        print_grid(game1);
-        if(rotten>0){
-            printf("L'ordinateur %d a mangé %d poisson rotten\n", num_computer-1, rotten);
+            alea_number_move = rand()%10 + 1; // Sélectionne un nombre de déplacements aléatoires (1 à 10)
+        }while(verify_number_move(alea_number_move, alea_direction,alea_num_penguin, num_computer, game1)==0); // Vérifie si le nombre de déplacements est valide
+        move_total(alea_number_move, alea_num_penguin, alea_direction, num_computer, game1, nb_rotten);  // Effectue le déplacement total du pingouin
+        print_grid(game1);  // Affiche la grille après le déplacement
+        if(rotten>0){ // Si des poissons pourris ont été mangés
+            printf("L'ordinateur %d a mangé %d poisson rotten\n", num_computer-1, rotten); // Affiche le nombre de poissons pourris mangés
         }
-        printf("L'ordinateur %d a mangé %d points ! \n", num_computer-1, game1->player[num_computer-1].score_player - score);
+        printf("L'ordinateur %d a mangé %d points ! \n", num_computer-1, game1->player[num_computer-1].score_player - score); // Affiche les points gagnés lors du tour
     }
 }
-void all_player_computer_tour(Game* game1){
-    one_player_tour(1, game1);
-    sleep(2);
-    int num_computer = 2; 
-    while(num_computer!=(game1->nb_player+1)){
-        computer_tour(num_computer, game1);
-        sleep(2);
-        num_computer++;
+void all_player_computer_tour(Game* game1){ // Procèdure  qui gère le tour de tous les joueurs (ordinateur et humain)
+    one_player_tour(1, game1); // Lance le tour du joueur humain (numéro 1)
+    sleep(2);  // Pause de 2 secondes pour rendre le jeu plus fluide
+    int num_computer = 2;  // Initialisation du numéro du premier joueur ordinateur
+    while(num_computer!=(game1->nb_player+1)){ // Boucle sur tous les joueurs ordinateurs
+        computer_tour(num_computer, game1);  // Lance le tour du joueur ordinateur courant
+        sleep(2); // Pause de 2 secondes entre chaque tour d'ordinateur
+        num_computer++; // Passe au joueur ordinateur suivant
         
     }
 }
-void game_total_computer(Game* game1){
-        while(verify_all_penguin_all_player(game1)==1){
-        all_player_computer_tour(game1);
-        print_score_player_ordi(game1);
-        if(index_max_score_player(game1)>1){
-            printf("Pour le moment l'ordinateur %d gagne ...\n", index_max_score_player(game1));
+
+void game_total_computer(Game* game1){ // Procèdure qui gère le déroulement complet d'une partie pour les ordinateurs
+        while(verify_all_penguin_all_player(game1)==1){ // Boucle tant que tous les pingouins ne sont pas bloqués
+        all_player_computer_tour(game1); // Lance un tour complet pour tous les joueurs
+        print_score_player_ordi(game1);  // Affiche les scores de tous les joueurs
+        if(index_max_score_player(game1)>1){ // Vérifie si un ordinateur est en tête
+            printf("Pour le moment l'ordinateur %d gagne ...\n", index_max_score_player(game1)); // Affiche l'ordinateur en tête
         }
         else{
-            printf("Pour le moment %s gagne ...\n", game1->player[0].name);
+            printf("Pour le moment %s gagne ...\n", game1->player[0].name); // Affiche le joueur humain en tête
         }
     }
-    if(index_max_score_player(game1)>1){
-        printf("félicitation au grand gagnant, l'ordinateur %d !", index_max_score_player(game1)-1);
+    if(index_max_score_player(game1)>1){ // Vérifie si un ordinateur a gagné
+        printf("félicitation au grand gagnant, l'ordinateur %d !", index_max_score_player(game1)-1); // Affiche l'ordinateur gagnant
     }
     else{
-        printf("félicitation au grand gagnant %s !", game1->player[index_max_score_player(game1)-1].name);
+        printf("félicitation au grand gagnant %s !", game1->player[index_max_score_player(game1)-1].name); // Affiche le joueur humain gagnant
     }
 }
+
