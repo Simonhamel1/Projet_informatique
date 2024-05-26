@@ -80,11 +80,9 @@ Les explications explique le but du jeu et comment on y joue.
 
 Enfin quand vous choissisez jouer, le jeu se lance, on vous demande :
 
-
--Si vous voulez choisir les coordonnées de vos pingouins (oui ou non), dans le cas de oui chaque joueur          rentre à tour de rôle les coordonnées de son premier pingouin, puis du deuxiéme...
-            
 -Quelle variantes vous voulez parmi les 3 disponible
 
+-Si vous voulez choisir les coordonnées de vos pingouins (oui ou non), dans le cas de oui chaque joueur rentre à tour de rôle les coordonnées de son premier pingouin, puis du deuxiéme...
 
 Le jeu peut commencer, chaque joueur choisi à son tour une direction possible puis choisi ensuite si il veut choisir son nombre de déplacements ou faire le maximum de déplacement dans cette direction. Il ramasse ensuite un nombre de points en fonction du nombre de poissons sur les cases où il est passé et de la  variante choisi. 
 Le jeu se termine quand tout les pingouins sont bloqués et le joueur ayant le plus de points gagne.
