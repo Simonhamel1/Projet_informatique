@@ -24,11 +24,17 @@ Cy-Fish est un jeu multijoueur tour par tour dans lequel vous allez pouvoir affr
 
 
 -De 2 à 6 joueur
--Jouer en solo contre des ordinateurs (jusqu'à 5 ordinateur)
+
+-Jouer en solo contre des ordinateurs
+
 -Affichage de la grille de jeu
+
 -3 Modes de jeu disponible
+
 -Possibilité de choisir les coordonnées de ses pingouins
+
 -Possibilité d'aller dans les paramètres
+
 -Possibilité de voir l'explication du jeu
 
 
