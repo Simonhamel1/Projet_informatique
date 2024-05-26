@@ -28,6 +28,8 @@ Cy-Fish est un jeu multijoueur tour par tour dans lequel vous allez pouvoir affr
 -Affichage de la grille de jeu
 -3 Modes de jeu disponible
 -Possibilité de choisir les coordonnées de ses pingouins
+-Possibilité d'aller dans les paramètres
+-Possibilité de voir l'explication du jeu
 
 
 ## Utilisation
@@ -35,7 +37,8 @@ Cy-Fish est un jeu multijoueur tour par tour dans lequel vous allez pouvoir affr
 
 Une fois le programme executé vous aurais la possibilité de choisir différentes choses :
 
--Choisir si vous voulez jouer en multijoueur ou contre un ordinateur
+-Choisir si vous voulez jouer en multijoueur ou contre un ordinateur.
+-Si 
 -Le nombre de joueur (si le choix précédent est multijoueur)
 -Proposition d'explication du jeu
 -Choix entre paramètres par défaut et saisi manuelle des paramètres
