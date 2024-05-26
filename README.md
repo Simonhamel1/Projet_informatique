@@ -91,15 +91,31 @@ Le jeu se termine quand tout les pingouins sont bloqués et le joueur ayant le p
 
 ## Structure du projet
 
+-structure.h : Ce fichier contient la définition de toute les structures utilisées dans le jeu
 
--
--
--
--
--
--
--
--
+-couleur.h : Ce fichier défini les différentes couleurs pour faciliter leur utilisation dans le code
+ 
+-create_box_fish.c : Ce fichier comporte les fonctions permettant de créer le tableau de deux dimensions de case (box), d'initialiser des valeurs, de génerer les poissons et de compter le nombre de case avec un poisson
+
+-players_informations.c : Ce fichier comporte les fonctions permettant de demander le nombre de joueur, de demander leur prénoms, de créer les dimensions par défaut, et de créer un tableau de joueur
+
+-print_grid.c : Ce fichier comporte toute les fonctions permettant d'afficher la grille de jeu en fonction des dimensions de la grille, des varianes choisies...
+
+-coordinate_penguin_fish.c : Ce fichier comporte toute les fonctions permettant de créer les coordonnées des pingouins en fonction de si l'utilisateur choisi de les rentrer ou si ça se fait aléatoirement
+
+-verify_move.c : Ce fichier comporte toute les fonctions permettant de vérifier le nombre de déplacements et les directions que le joueur choisi pour son pingouin
+
+-Move.c : Ce fichier comporte toute les fonctions permettant de faire bouger le pingouin sur la grille
+
+-players_tour.c : Ce fichier comporte toute les fonctions permettant de faire jouer les joueurs aux jeu
+
+-computer_tour.c : Ce fichier comporte toute les fonctions permettant de jouer en solo contre les ordinateurs
+
+-fish_variants.c : Ce fichier comporte toute les fonctions permettant de faire le nécessaire pour pouvoir jouer aux différentes variantes
+
+-launch_game.c : Ce fichier comporte toute les fonctions permettant de lancer le jeu : les parametres, les explications, le jeu contre des joueurs, le jeu contre des ordinateurs
+
+-main.c : Ce fichier comporte une seule fonction permettant de lancer le jeu
 
 
 ## Contributeurs
