@@ -436,11 +436,11 @@ void explication(){ // Procèdure pour afficher les explications du jeu
     printf("%c      /    %c      /\n",92,92);
     printf(" %c____/  🐧  %c____/\n",92,92);
     printf(" /    %c      /    %c\n",92,92);
-    printf("/   4  %c____/   5  %c\n",92,92);
+    printf("/   4  %c____/   6  %c\n",92,92);
     printf("%c      /    %c      /\n",92,92);
     printf(" %c____/   5  %c____/\n",92,92);
-    printf("      %c      /\n",92,92);
-    printf("       %c____/\n",92,92);
+    printf("      %c      /\n",92);
+    printf("       %c____/\n",92);
     printf("\n");
     printf("Pour choisir la direction numéro une (haut_gauche), vous devrez entrer 1\n"); // Explication de la sélection des directions
     printf("Pour choisir la direction numéro deux (haut), vous devrez entrer 2\n");

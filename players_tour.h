@@ -1,6 +1,7 @@
 #ifndef PLAYER_TOUR_H
 #define PLAYER_TOUR_H
 #include "structure.h"
+#include "print_grid.h"
 void print_coordinate_one_penguin(int num_player, Game* game1);
 void move_top_right(int num_penguin, int num_player, Game* game1, int* nb_rotten);
 void move_top(int num_penguin, int num_player, Game* game1, int* nb_rotten);
